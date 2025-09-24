@@ -121,11 +121,6 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-manrope;
   }
-
-  /* Prevent gray flash on hero pages by setting initial background to match overlay */
-  body:has(.slideshow-container) {
-    background-color: #1a1a1a !important; /* Matches bg-black/45 overlay */
-  }
 }
 
 @layer utilities {
@@ -145,7 +140,6 @@ All colors MUST be HSL.
   /* Slideshow Animations */
   .slideshow-container {
     @apply relative w-full h-screen overflow-hidden;
-    background-color: #1a1a1a; /* Matches overlay color to prevent flash */
   }
 
   .slideshow-image {
