@@ -33,10 +33,6 @@ All colors MUST be HSL.
     --glot-green-light: 197 71% 83%;
     --glot-green-dark: 197 71% 63%;
     --glot-green-subtle: 197 71% 93%;
-    
-    /* Conference theme colors */
-    --conference-warm: 35 20% 85%;
-    --conference-neutral: 35 15% 75%;
 
     /* Gradients */
     --gradient-glot: linear-gradient(135deg, hsl(var(--glot-green)), hsl(var(--glot-green-dark)));
@@ -99,10 +95,6 @@ All colors MUST be HSL.
     --glot-green-light: 197 71% 83%;
     --glot-green-dark: 197 71% 63%;
     --glot-green-subtle: 197 71% 93%;
-    
-    /* Conference theme colors */
-    --conference-warm: 35 20% 85%;
-    --conference-neutral: 35 15% 75%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -148,7 +140,6 @@ All colors MUST be HSL.
   /* Slideshow Animations */
   .slideshow-container {
     @apply relative w-full h-screen overflow-hidden;
-    background-color: hsl(var(--conference-warm));
   }
 
   .slideshow-image {
@@ -160,8 +151,7 @@ All colors MUST be HSL.
   }
 
   .slideshow-overlay {
-    @apply absolute inset-0 z-10;
-    /* Overlay removed for bright images */
+    @apply absolute inset-0 bg-black/45 z-10;
   }
 
   .slideshow-content {

@@ -41,7 +41,7 @@ const Index = () => {
   }, [prefersReducedMotion]);
 
   return (
-    <div className="h-screen relative overflow-hidden" style={{ backgroundColor: 'hsl(35, 20%, 85%)' }}>
+    <div className="h-screen bg-background relative overflow-hidden">
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-30 p-4">
         <div className="flex justify-end">
@@ -72,7 +72,8 @@ const Index = () => {
           </picture>
         ))}
 
-        {/* No overlay - keeping images bright */}
+        {/* Dark Overlay */}
+        <div className="slideshow-overlay" aria-hidden="true" />
 
         {/* Content */}
         <div className="slideshow-content">
@@ -92,15 +93,13 @@ const Index = () => {
               </a>
             </div>
             
-            {/* Main Heading - With strong text shadow for readability */}
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight max-w-3xl mx-auto animate-slide-up" 
-                style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.8), 1px 1px 4px rgba(0, 0, 0, 0.6)' }}>
+            {/* Main Heading - Further reduced */}
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight max-w-3xl mx-auto animate-slide-up">
               {t('home.tagline')}
             </h1>
             
             {/* Subheading */}
-            <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed animate-slide-up"
-               style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7), 1px 1px 3px rgba(0, 0, 0, 0.5)' }}>
+            <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed animate-slide-up">
               {t('home.subtitle')}
             </p>
             
