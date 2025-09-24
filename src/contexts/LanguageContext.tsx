@@ -16,6 +16,7 @@ const translations = {
     
     // Home page
     'home.tagline': 'Accédez à vos évènements, conférences et réunions dans la langue de votre choix.',
+    'home.subtitle': 'Connectez, traduisez et communiquez sans effort entre les langues, en temps réel.',
     'home.speakers.title': 'Pour les Orateurs',
     'home.speakers.description': 'Interface intuitive pour gérer vos événements et surveiller la qualité de traduction en temps réel.',
     'home.listeners.title': 'Pour les Auditeurs',
@@ -183,6 +184,7 @@ const translations = {
     
     // Home page
     'home.tagline': 'Access your events, conferences and meetings in the language of your choice.',
+    'home.subtitle': 'Connect, translate, and communicate seamlessly across languages in real-time.',
     'home.speakers.title': 'For Speakers',
     'home.speakers.description': 'Intuitive interface to manage your events and monitor translation quality in real time.',
     'home.listeners.title': 'For Listeners',

@@ -100,7 +100,7 @@ const Index = () => {
             
             {/* Subheading */}
             <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed animate-slide-up">
-              Connect, translate, and communicate seamlessly across languages in real-time
+              {t('home.subtitle')}
             </p>
             
             {/* CTA Buttons */}
