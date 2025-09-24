@@ -41,7 +41,7 @@ const Index = () => {
   }, [prefersReducedMotion]);
 
   return (
-    <div className="h-screen bg-background relative overflow-hidden">
+    <div className="h-screen relative overflow-hidden" style={{ backgroundColor: '#1a1a1a' }}>
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-30 p-4">
         <div className="flex justify-end">
