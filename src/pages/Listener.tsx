@@ -16,6 +16,7 @@ const Listener = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
+  const [connectionError, setConnectionError] = useState("");
 
   const availableLanguages = [
     { code: "fr", name: "Français", flag: "🇫🇷" },
@@ -27,7 +28,13 @@ const Listener = () => {
   ];
 
   const handleConnect = () => {
+    setConnectionError("");
     if (eventCode && selectedLanguage) {
+      // Simulate validation - in real app, this would call an API
+      if (eventCode.length < 4) {
+        setConnectionError(t('listener.invalidEventCode'));
+        return;
+      }
       setIsConnected(true);
     }
   };
@@ -173,6 +180,13 @@ const Listener = () => {
                 </SelectContent>
               </Select>
             </div>
+
+            {/* Error Message */}
+            {connectionError && (
+              <div className="text-sm text-red-600 text-center p-2 bg-red-50 rounded-md">
+                {connectionError}
+              </div>
+            )}
 
             {/* Connect Button */}
             <Button 

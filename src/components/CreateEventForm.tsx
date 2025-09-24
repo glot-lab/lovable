@@ -130,7 +130,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onEventCreated }) => 
                   onClick={addPopularLanguages}
                   className="text-xs"
                 >
-                  + Populaires
+                  + {t('organizer.workflow.popular')}
                 </Button>
                 <Button 
                   type="button"
@@ -139,7 +139,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onEventCreated }) => 
                   onClick={clearTargetLanguages}
                   className="text-xs"
                 >
-                  Effacer
+                  {t('organizer.workflow.clear')}
                 </Button>
               </div>
             </div>

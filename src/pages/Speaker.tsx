@@ -129,7 +129,6 @@ const Speaker = () => {
     setTimeout(() => {
       setIsTestingAudio(false);
     }, 2000);
-    console.log('Testing audio with device:', selectedDevice);
   };
 
   const handleBroadcastToggle = () => {
