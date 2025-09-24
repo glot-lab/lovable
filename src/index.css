@@ -151,7 +151,8 @@ All colors MUST be HSL.
   }
 
   .slideshow-overlay {
-    @apply absolute inset-0 bg-black/45 z-10;
+    @apply absolute inset-0 z-10;
+    background: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0.3) 100%);
   }
 
   .slideshow-content {
