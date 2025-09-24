@@ -150,6 +150,10 @@ All colors MUST be HSL.
     @apply opacity-100;
   }
 
+  .slideshow-image:first-child {
+    @apply opacity-100;
+  }
+
   .slideshow-overlay {
     @apply absolute inset-0 bg-black/45 z-10;
   }
