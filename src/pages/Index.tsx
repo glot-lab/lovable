@@ -130,7 +130,7 @@ const Index = () => {
       
       {/* Footer Links */}
       <footer className="absolute bottom-0 left-0 right-0 z-30 p-2 pb-4">
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center text-center text-sm">
+        <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 justify-center items-center text-center text-sm">
           <a 
             href="/privacy-policy" 
             className="text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1"
