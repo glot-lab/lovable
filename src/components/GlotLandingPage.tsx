@@ -12,50 +12,38 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center items-center px-4 py-8 animate-fade-in">
       <InterfaceLanguageSelector />
-      
       {/* Logo */}
       <div className="mb-8 animate-scale-in">
         <a href="/">
           <img 
             src={glotLogoNew} 
             alt="Glot" 
-            className="h-20 md:h-24 w-auto cursor-pointer hover:opacity-80 transition-opacity"
+            className="h-24 md:h-28 w-auto cursor-pointer hover:opacity-80 transition-opacity"
           />
         </a>
       </div>
 
       {/* Title */}
-      <h1 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-8 animate-slide-up">
+      <h1 className="text-2xl md:text-3xl font-semibold text-foreground text-center mb-6 max-w-2xl animate-slide-up">
         {t('landing.welcome')}
       </h1>
 
-      {/* Content Container */}
-      <div className="text-center mb-10 max-w-lg animate-slide-up">
-        {/* Main instruction */}
-        <p className="text-lg text-muted-foreground mb-8 font-medium">
+      {/* Description */}
+      <div className="text-muted-foreground text-center mb-8 max-w-lg leading-relaxed px-4 animate-slide-up space-y-4">
+        <p className="font-medium">
           {t('landing.bluetoothInstruction')}
         </p>
         
-        {/* Quick start section */}
-        <div className="mb-8">
-          <p className="text-lg font-semibold text-foreground mb-4">
-            {t('landing.quickStart')}
-          </p>
-          <div className="text-left space-y-3">
-            <p className="text-base text-muted-foreground leading-relaxed">
-              {t('landing.step1')}
-            </p>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              {t('landing.step2')}
-            </p>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              {t('landing.step3')}
-            </p>
-          </div>
+        <div className="text-left">
+          <p className="font-medium mb-3">{t('landing.quickStart')}</p>
+          <ol className="space-y-2 text-sm">
+            <li>{t('landing.step1')}</li>
+            <li>{t('landing.step2')}</li>
+            <li>{t('landing.step3')}</li>
+          </ol>
         </div>
         
-        {/* Ready message */}
-        <p className="text-lg font-semibold text-foreground">
+        <p className="text-foreground font-medium mt-4">
           {t('landing.readyMessage')}
         </p>
       </div>
@@ -63,7 +51,7 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
       {/* Main CTA Button */}
       <button
         onClick={onJoinEvent}
-        className="w-full max-w-xs glot-button-orange hover-lift py-4 px-8 rounded-lg mb-8 animate-scale-in font-semibold"
+        className="w-full max-w-xs glot-button-orange hover-lift py-4 px-8 rounded-lg mb-6 animate-scale-in"
       >
         {t('landing.joinEvent')}
       </button>
@@ -73,14 +61,14 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
         href="https://getglot.com" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-base text-muted-foreground hover:text-foreground underline underline-offset-4 mb-auto transition-colors"
+        className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4 mb-auto transition-colors"
       >
         {t('landing.learnMore')}
       </a>
 
       {/* Footer */}
       <footer className="mt-auto pt-8">
-        <div className="text-sm text-muted-foreground text-center space-x-2">
+        <div className="text-xs text-muted-foreground text-center space-x-2">
           <a 
             href="https://getglot.com/legal/privacy-policy" 
             target="_blank" 
