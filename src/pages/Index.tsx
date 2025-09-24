@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
-import glotLogoNew from "@/assets/glot-logo-new.png";
+import glotLogoWhite from "@/assets/glot-logo-white.png";
 
 const heroImages = [
   { src: "/img/hero-1.webp", alt: "Conference participants in museum setting" },
@@ -86,7 +86,7 @@ const Index = () => {
                 aria-label="Glot homepage"
               >
                 <img 
-                  src={glotLogoNew} 
+                  src={glotLogoWhite} 
                   alt="Glot" 
                   className="h-16 md:h-20 w-auto mx-auto cursor-pointer hover:opacity-90 transition-opacity"
                 />
@@ -94,7 +94,7 @@ const Index = () => {
             </div>
             
             {/* Main Heading */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto animate-slide-up">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight max-w-3xl mx-auto animate-slide-up">
               {t('home.tagline')}
             </h1>
             
@@ -107,7 +107,7 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-4 animate-scale-in">
               <Button 
                 size="lg" 
-                className="glot-button hover-lift w-full sm:w-auto" 
+                className="glot-button-white hover-lift w-full sm:w-auto" 
                 asChild
               >
                 <a href="/listener" className="flex items-center justify-center">
@@ -116,7 +116,7 @@ const Index = () => {
               </Button>
               <Button 
                 size="lg" 
-                className="glot-button-outline hover-lift w-full sm:w-auto" 
+                className="glot-button-white-outline hover-lift w-full sm:w-auto" 
                 asChild
               >
                 <a href="/organizer" className="flex items-center justify-center">

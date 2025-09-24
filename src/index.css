@@ -186,6 +186,14 @@ All colors MUST be HSL.
   .glot-button-outline {
     @apply border-2 border-glot-green text-glot-green bg-transparent hover:bg-glot-green hover:text-white font-semibold transition-all duration-200 min-h-[48px] px-6 py-3;
   }
+
+  .glot-button-white {
+    @apply bg-white hover:bg-white/90 text-gray-900 font-semibold transition-all duration-200 shadow-lg hover:shadow-xl min-h-[48px] px-6 py-3;
+  }
+  
+  .glot-button-white-outline {
+    @apply border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900 font-semibold transition-all duration-200 min-h-[48px] px-6 py-3;
+  }
   
   .glass-effect {
     @apply bg-background/80 backdrop-blur-sm border border-border/50;
