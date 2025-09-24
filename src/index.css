@@ -137,21 +137,65 @@ All colors MUST be HSL.
     animation: scale-in 0.4s ease-out;
   }
 
+  /* Slideshow Animations */
+  .slideshow-container {
+    @apply relative w-full min-h-[85vh] md:min-h-[90vh] overflow-hidden;
+  }
+
+  .slideshow-image {
+    @apply absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700 ease-in-out;
+  }
+
+  .slideshow-image.active {
+    @apply opacity-100;
+  }
+
+  .slideshow-overlay {
+    @apply absolute inset-0 bg-black/45 z-10;
+  }
+
+  .slideshow-content {
+    @apply relative z-20 flex flex-col justify-center items-center min-h-[85vh] md:min-h-[90vh] px-4 py-8;
+    @apply safe-area-padding;
+  }
+
+  /* Prevent animation on reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .slideshow-image {
+      @apply transition-none;
+    }
+    
+    .slideshow-image:first-child {
+      @apply opacity-100;
+    }
+    
+    .slideshow-image:not(:first-child) {
+      @apply opacity-0;
+    }
+  }
+
   /* Interactive Effects */
   .hover-lift {
     @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }
   
   .glot-button {
-    @apply bg-[#52A3EF] hover:bg-[#4292DC] text-white font-semibold transition-all duration-200 shadow-lg hover:shadow-xl;
+    @apply bg-glot-green hover:bg-glot-green-dark text-white font-semibold transition-all duration-200 shadow-lg hover:shadow-xl min-h-[48px] px-6 py-3;
   }
   
   .glot-button-outline {
-    @apply border-2 border-[#52A3EF] text-[#52A3EF] bg-transparent hover:bg-[#52A3EF] hover:text-white font-semibold transition-all duration-200;
+    @apply border-2 border-glot-green text-glot-green bg-transparent hover:bg-glot-green hover:text-white font-semibold transition-all duration-200 min-h-[48px] px-6 py-3;
   }
   
   .glass-effect {
     @apply bg-background/80 backdrop-blur-sm border border-border/50;
+  }
+
+  .safe-area-padding {
+    @apply px-4 pb-8;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
   }
 }
 

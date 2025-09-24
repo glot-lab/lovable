@@ -1,64 +1,157 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, HeadphonesIcon, Zap } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
 import glotLogoNew from "@/assets/glot-logo-new.png";
 
+const heroImages = [
+  { src: "/img/hero-1.webp", alt: "Conference participants in museum setting" },
+  { src: "/img/hero-2.jpg", alt: "International assembly hall with delegates" },
+  { src: "/img/hero-3.jpg", alt: "Conference networking and conversation" },
+  { src: "/img/hero-4.jpg", alt: "Humanitarian aid coordination meeting" },
+];
+
 const Index = () => {
   const { t } = useLanguage();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    // Only run slideshow if user doesn't prefer reduced motion
+    if (prefersReducedMotion) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 6000); // 6 seconds per image
+
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <InterfaceLanguageSelector />
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center space-y-8 animate-fade-in">
-          {/* Logo */}
-          <div className="mb-8 animate-scale-in">
-            <a href="/">
-              <img 
-                src={glotLogoNew} 
-                alt="Glot" 
-                className="h-20 md:h-24 w-auto mx-auto cursor-pointer hover:opacity-80 transition-opacity"
-              />
-            </a>
-          </div>
-          
-          <div className="space-y-4 animate-slide-up">
-            <p className="mb-10 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+    <div className="min-h-screen bg-background relative">
+      {/* Header */}
+      <header className="absolute top-0 left-0 right-0 z-30 p-4">
+        <div className="flex justify-end">
+          <InterfaceLanguageSelector />
+        </div>
+      </header>
+
+      {/* Hero Slideshow Section */}
+      <section className="slideshow-container" role="banner" aria-label="Hero slideshow">
+        {/* Background Images */}
+        {heroImages.map((image, index) => (
+          <picture key={index}>
+            <source 
+              media="(max-width: 800px)" 
+              srcSet={`${image.src}?w=800&q=80`}
+              type="image/webp"
+            />
+            <img
+              src={image.src}
+              alt={image.alt}
+              className={`slideshow-image ${index === currentImageIndex ? 'active' : ''}`}
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+              style={{ 
+                willChange: prefersReducedMotion ? 'auto' : 'opacity',
+              }}
+            />
+          </picture>
+        ))}
+
+        {/* Dark Overlay */}
+        <div className="slideshow-overlay" aria-hidden="true" />
+
+        {/* Content */}
+        <div className="slideshow-content">
+          <div className="text-center space-y-6 max-w-4xl mx-auto animate-fade-in">
+            {/* Logo */}
+            <div className="mb-8 animate-scale-in">
+              <a 
+                href="/" 
+                className="inline-block focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded"
+                aria-label="Glot homepage"
+              >
+                <img 
+                  src={glotLogoNew} 
+                  alt="Glot" 
+                  className="h-16 md:h-20 w-auto mx-auto cursor-pointer hover:opacity-90 transition-opacity"
+                />
+              </a>
+            </div>
+            
+            {/* Main Heading */}
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto animate-slide-up">
               {t('home.tagline')}
+            </h1>
+            
+            {/* Subheading */}
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed animate-slide-up">
+              Connect, translate, and communicate seamlessly across languages in real-time
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="glot-button hover-lift px-8 py-3" asChild>
-                <a href="/listener">{t('nav.joinEvent')}</a>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-4 animate-scale-in">
+              <Button 
+                size="lg" 
+                className="glot-button hover-lift w-full sm:w-auto" 
+                asChild
+              >
+                <a href="/listener" className="flex items-center justify-center">
+                  {t('nav.joinEvent')}
+                </a>
               </Button>
-              <Button size="lg" className="glot-button-outline hover-lift px-8 py-3" asChild>
-                <a href="/organizer">{t('nav.organizer')}</a>
+              <Button 
+                size="lg" 
+                className="glot-button-outline hover-lift w-full sm:w-auto" 
+                asChild
+              >
+                <a href="/organizer" className="flex items-center justify-center">
+                  {t('nav.organizer')}
+                </a>
               </Button>
             </div>
           </div>
         </div>
-
-      </div>
+      </section>
       
       {/* Footer Links */}
-      <div className="absolute bottom-8 left-0 right-0">
-        <div className="flex flex-col sm:flex-row gap-4 justify-center text-center sm:text-left text-sm">
+      <footer className="absolute bottom-0 left-0 right-0 z-30 p-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-center text-sm">
           <a 
             href="/privacy-policy" 
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1"
+            style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             {t('home.privacyPolicy')}
           </a>
-          <span className="hidden sm:inline text-muted-foreground">•</span>
+          <span className="hidden sm:inline text-white/60">•</span>
           <a 
             href="/terms-of-service" 
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1"
+            style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             {t('home.termsOfService')}
           </a>
         </div>
+      </footer>
+
+      {/* Screen Reader Announcements for Slideshow Changes */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        {`Showing image ${currentImageIndex + 1} of ${heroImages.length}: ${heroImages[currentImageIndex].alt}`}
       </div>
     </div>
   );
