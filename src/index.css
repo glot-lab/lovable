@@ -267,10 +267,10 @@ All colors MUST be HSL.
   }
 
   .safe-area-padding {
-    @apply px-4 pb-8;
+    @apply px-4;
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
-    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
 }
 

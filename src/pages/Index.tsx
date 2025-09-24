@@ -41,7 +41,7 @@ const Index = () => {
   }, [prefersReducedMotion]);
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="h-screen bg-background relative overflow-hidden">
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-30 p-4">
         <div className="flex justify-end">
@@ -76,10 +76,10 @@ const Index = () => {
         <div className="slideshow-overlay" aria-hidden="true" />
 
         {/* Content */}
-        <div className="slideshow-content pt-16 md:pt-20">
+        <div className="slideshow-content pt-8 md:pt-12">
           <div className="text-center space-y-3 max-w-4xl mx-auto animate-fade-in">
             {/* Logo - Moved to top and enlarged */}
-            <div className="mb-4 animate-scale-in">
+            <div className="mb-2 animate-scale-in">
               <a 
                 href="/" 
                 className="inline-block focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded"
@@ -129,8 +129,8 @@ const Index = () => {
       </section>
       
       {/* Footer Links */}
-      <footer className="absolute bottom-0 left-0 right-0 z-30 p-4">
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-center text-sm">
+      <footer className="absolute bottom-0 left-0 right-0 z-30 p-2 pb-4">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center text-center text-sm">
           <a 
             href="/privacy-policy" 
             className="text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1"
