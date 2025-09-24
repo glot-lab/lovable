@@ -76,10 +76,10 @@ const Index = () => {
         <div className="slideshow-overlay" aria-hidden="true" />
 
         {/* Content */}
-        <div className="slideshow-content">
-          <div className="text-center space-y-4 max-w-4xl mx-auto animate-fade-in">
+        <div className="slideshow-content pt-16 md:pt-20">
+          <div className="text-center space-y-3 max-w-4xl mx-auto animate-fade-in">
             {/* Logo - Moved to top and enlarged */}
-            <div className="mb-6 animate-scale-in">
+            <div className="mb-4 animate-scale-in">
               <a 
                 href="/" 
                 className="inline-block focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded"
