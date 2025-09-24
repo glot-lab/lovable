@@ -30,10 +30,6 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
 
       {/* Description */}
       <div className="text-muted-foreground text-center mb-8 max-w-lg leading-relaxed px-4 animate-slide-up space-y-4 mt-16">
-        <p className="font-medium">
-          {t('landing.bluetoothInstruction')}
-        </p>
-        
         <div className="text-left mt-8">
           <p className="font-medium mb-3">{t('landing.quickStart')}</p>
           <ol className="space-y-2 text-sm">
