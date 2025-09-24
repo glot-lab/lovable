@@ -188,11 +188,15 @@ All colors MUST be HSL.
   }
 
   .glot-button-white {
-    @apply bg-white hover:bg-white/90 text-gray-900 font-semibold transition-all duration-200 shadow-lg hover:shadow-xl min-h-[48px] px-6 py-3 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent active:bg-gray-100;
+    @apply bg-white hover:bg-white/90 text-gray-900 font-semibold transition-all duration-200 shadow-lg hover:shadow-xl min-h-[48px] px-6 py-3;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20;
+    @apply active:bg-gray-100 active:scale-95;
   }
   
   .glot-button-white-outline {
-    @apply border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900 font-semibold transition-all duration-200 min-h-[48px] px-6 py-3 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-transparent active:bg-white/20;
+    @apply border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900 font-semibold transition-all duration-200 min-h-[48px] px-6 py-3;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black/20;
+    @apply active:bg-white/20 active:scale-95;
   }
   
   .glass-effect {
