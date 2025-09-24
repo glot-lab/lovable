@@ -34,7 +34,7 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
           {t('landing.bluetoothInstruction')}
         </p>
         
-        <div className="text-left">
+        <div className="text-left mt-8">
           <p className="font-medium mb-3">{t('landing.quickStart')}</p>
           <ol className="space-y-2 text-sm">
             <li>{t('landing.step1')}</li>
