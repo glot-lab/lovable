@@ -29,7 +29,7 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
       </h1>
 
       {/* Description */}
-      <div className="text-muted-foreground text-center mb-8 max-w-lg leading-relaxed px-4 animate-slide-up space-y-4">
+      <div className="text-muted-foreground text-center mb-8 max-w-lg leading-relaxed px-4 animate-slide-up space-y-4 mt-16">
         <p className="font-medium">
           {t('landing.bluetoothInstruction')}
         </p>
