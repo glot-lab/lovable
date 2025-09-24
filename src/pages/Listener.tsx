@@ -213,7 +213,7 @@ const Listener = () => {
 
             {/* Connect Button */}
             <Button 
-              className="w-full glot-button hover-lift" 
+              className="w-full glot-button-orange hover-lift" 
               onClick={handleConnect}
               disabled={!eventCode || !selectedLanguage}
               size="lg"

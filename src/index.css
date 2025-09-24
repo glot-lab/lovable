@@ -261,6 +261,50 @@ All colors MUST be HSL.
     border-color: white !important;
     transform: scale(0.98) !important;
   }
+
+  .glot-button-orange {
+    background-color: #FF8E56 !important;
+    color: white !important;
+    border: none !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 6px -1px rgba(255, 142, 86, 0.2), 0 2px 4px -1px rgba(255, 142, 86, 0.1) !important;
+    min-height: 48px !important;
+    padding: 12px 24px !important;
+    border-radius: 0.75rem !important;
+    outline: none !important;
+    @apply inline-flex items-center justify-center;
+  }
+  
+  .glot-button-orange:hover {
+    background-color: #E8774A !important;
+    color: white !important;
+    box-shadow: 0 10px 15px -3px rgba(255, 142, 86, 0.3), 0 4px 6px -2px rgba(255, 142, 86, 0.15) !important;
+    transform: translateY(-1px) !important;
+  }
+  
+  .glot-button-orange:focus,
+  .glot-button-orange:focus-visible {
+    background-color: #FF8E56 !important;
+    color: white !important;
+    outline: 2px solid rgba(255, 142, 86, 0.5) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 0 transparent !important;
+  }
+  
+  .glot-button-orange:active {
+    background-color: #D6653E !important;
+    color: white !important;
+    transform: scale(0.98) !important;
+    box-shadow: 0 1px 2px 0 rgba(255, 142, 86, 0.2) !important;
+  }
+
+  .glot-button-orange:disabled {
+    background-color: #FF8E56 !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+  }
   
   .glass-effect {
     @apply bg-background/80 backdrop-blur-sm border border-border/50;
