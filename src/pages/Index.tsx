@@ -132,9 +132,7 @@ const Index = () => {
       <footer className="absolute bottom-0 left-0 right-0 z-30 p-2 pb-4">
         <div className="flex flex-row gap-0 justify-center items-center text-center text-sm">
           <a 
-            href="https://getglot.com/legal/privacy-policy" 
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/privacy-policy" 
             className="text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1"
             style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
@@ -142,9 +140,7 @@ const Index = () => {
           </a>
           <span className="hidden sm:inline text-white/60">•</span>
           <a 
-            href="https://getglot.com/legal/terms-of-service" 
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/terms-of-service" 
             className="text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded px-2 py-1"
             style={{ minHeight: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
