@@ -73,7 +73,7 @@ const Listener = () => {
                 <Button 
                   size="lg"
                   onClick={togglePlayPause}
-                  className={`w-24 h-24 rounded-full glot-button hover-lift text-white shadow-lg touch-manipulation transition-all duration-500 ${
+                  className={`w-24 h-24 rounded-full glot-button-orange hover-lift text-white shadow-lg touch-manipulation transition-all duration-500 ${
                     isPlaying ? 'animate-[breathe_2s_ease-in-out_infinite]' : 'hover:scale-105'
                   }`}
                 >
