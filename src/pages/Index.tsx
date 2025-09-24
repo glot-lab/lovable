@@ -76,7 +76,7 @@ const Index = () => {
         <div className="slideshow-overlay" aria-hidden="true" />
 
         {/* Content */}
-        <div className="slideshow-content pt-8 md:pt-12">
+        <div className="slideshow-content">
           <div className="text-center space-y-3 max-w-4xl mx-auto animate-fade-in">
             {/* Logo - Moved to top and enlarged */}
             <div className="mb-2 animate-scale-in">
