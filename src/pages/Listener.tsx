@@ -65,35 +65,6 @@ const Listener = () => {
                 {/* Event Title */}
                 <h1 className="text-2xl font-semibold mb-6 text-foreground">Tech Conference 2024</h1>
                 
-                {/* Modern Translation Animation */}
-                <div className="relative w-40 h-40 mx-auto mb-8">
-                  {/* Outer pulsing ring */}
-                  <div className={`absolute inset-0 rounded-full bg-glot-green/10 ${isPlaying ? 'animate-pulse' : ''}`}></div>
-                  
-                  {/* Middle animated ring */}
-                  {isPlaying && (
-                    <div className="absolute inset-2 rounded-full border-2 border-glot-green/30 animate-ping"></div>
-                  )}
-                  
-                  {/* Inner core */}
-                  <div className={`absolute inset-8 rounded-full bg-glot-green/20 flex items-center justify-center transition-all duration-300 ${isPlaying ? 'bg-glot-green/30 scale-110' : ''}`}>
-                    <div className={`w-16 h-16 rounded-full bg-glot-green/40 flex items-center justify-center ${isPlaying ? 'animate-pulse' : ''}`}>
-                      {/* Waveform dots */}
-                      {isPlaying ? (
-                        <div className="flex items-center gap-1">
-                          <div className="w-1 h-8 bg-glot-green rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                          <div className="w-1 h-6 bg-glot-green rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                          <div className="w-1 h-10 bg-glot-green rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                          <div className="w-1 h-4 bg-glot-green rounded-full animate-bounce" style={{ animationDelay: '450ms' }}></div>
-                          <div className="w-1 h-7 bg-glot-green rounded-full animate-bounce" style={{ animationDelay: '600ms' }}></div>
-                        </div>
-                      ) : (
-                        <Volume2 className="w-8 h-8 text-glot-green" />
-                      )}
-                    </div>
-                  </div>
-                </div>
-                
                 <h2 className="text-2xl font-semibold mb-3 text-foreground">
                   {availableLanguages.find(l => l.code === selectedLanguage)?.name}
                 </h2>
@@ -102,7 +73,9 @@ const Listener = () => {
                 <Button 
                   size="lg"
                   onClick={togglePlayPause}
-                  className="w-24 h-24 rounded-full glot-button hover-lift text-white shadow-lg touch-manipulation"
+                  className={`w-24 h-24 rounded-full glot-button hover-lift text-white shadow-lg touch-manipulation transition-all duration-300 ${
+                    isPlaying ? 'animate-pulse scale-110' : 'hover:scale-105'
+                  }`}
                 >
                   {isPlaying ? (
                     <Pause className="w-10 h-10" />
