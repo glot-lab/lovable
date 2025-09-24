@@ -51,7 +51,7 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
       {/* Main CTA Button */}
       <button
         onClick={onJoinEvent}
-        className="w-full max-w-xs glot-button hover-lift py-4 px-8 rounded-lg mb-6 animate-scale-in"
+        className="w-full max-w-xs glot-button-orange hover-lift py-4 px-8 rounded-lg mb-6 animate-scale-in"
       >
         {t('landing.joinEvent')}
       </button>
