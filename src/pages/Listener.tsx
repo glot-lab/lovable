@@ -62,8 +62,6 @@ const Listener = () => {
             {/* Audio Player */}
             <Card className="border-0 shadow-lg hover-lift bg-card/80 backdrop-blur-sm">
               <CardContent className="p-8 text-center">
-                {/* Event Title */}
-                <h1 className="text-2xl font-semibold mb-6 text-foreground">Tech Conference 2024</h1>
                 
                 <h2 className="text-2xl font-semibold mb-3 text-foreground">
                   {availableLanguages.find(l => l.code === selectedLanguage)?.name}
