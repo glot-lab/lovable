@@ -77,9 +77,9 @@ const Index = () => {
 
         {/* Content */}
         <div className="slideshow-content">
-          <div className="text-center space-y-6 max-w-4xl mx-auto animate-fade-in">
-            {/* Logo */}
-            <div className="mb-8 animate-scale-in">
+          <div className="text-center space-y-4 max-w-4xl mx-auto animate-fade-in">
+            {/* Logo - Moved to top and enlarged */}
+            <div className="mb-6 animate-scale-in">
               <a 
                 href="/" 
                 className="inline-block focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent rounded"
@@ -88,18 +88,18 @@ const Index = () => {
                 <img 
                   src={glotLogoWhite} 
                   alt="Glot" 
-                  className="h-16 md:h-20 w-auto mx-auto cursor-pointer hover:opacity-90 transition-opacity"
+                  className="h-24 md:h-32 lg:h-36 w-auto mx-auto cursor-pointer hover:opacity-90 transition-opacity"
                 />
               </a>
             </div>
             
-            {/* Main Heading */}
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight max-w-3xl mx-auto animate-slide-up">
+            {/* Main Heading - Further reduced */}
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight max-w-3xl mx-auto animate-slide-up">
               {t('home.tagline')}
             </h1>
             
             {/* Subheading */}
-            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed animate-slide-up">
+            <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed animate-slide-up">
               Connect, translate, and communicate seamlessly across languages in real-time
             </p>
             
