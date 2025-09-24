@@ -42,10 +42,6 @@ const GlotLandingPage = ({ onJoinEvent }: GlotLandingPageProps) => {
             <li>{t('landing.step3')}</li>
           </ol>
         </div>
-        
-        <p className="text-foreground font-medium mt-4">
-          {t('landing.readyMessage')}
-        </p>
       </div>
 
       {/* Main CTA Button */}
