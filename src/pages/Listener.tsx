@@ -113,14 +113,6 @@ const Listener = () => {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="border-t bg-muted/30 p-4">
-          <div className="container mx-auto text-center">
-             <p className="text-sm text-muted-foreground">
-               {t('listener.encryption')}
-             </p>
-          </div>
-        </div>
       </div>
     );
   }
