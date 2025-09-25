@@ -125,6 +125,7 @@ const Listener = () => {
   // Connection Screen
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <InterfaceLanguageSelector />
       <div className="w-full max-w-md space-y-8">
         
         {/* Glot Branding */}
@@ -144,9 +145,6 @@ const Listener = () => {
         <Card className="border-0 shadow-lg">
           <CardHeader className="text-center space-y-1">
              <CardTitle className="text-xl font-normal">{t('listener.connection')}</CardTitle>
-             <CardDescription>
-               {t('listener.providedByOrganizer')}
-             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             
