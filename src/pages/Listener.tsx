@@ -135,9 +135,6 @@ const Listener = () => {
           </a>
           <div>
              <h1 className="text-3xl font-light mb-2">{t('listener.joinEvent')}</h1>
-             <p className="text-muted-foreground">
-               {t('listener.enterCode')}
-             </p>
           </div>
         </div>
 
