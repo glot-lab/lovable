@@ -351,14 +351,23 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<InterfaceLanguage>('fr');
+  const [language, setLanguage] = useState<InterfaceLanguage>(() => {
+    // Check localStorage for saved language preference
+    const savedLanguage = localStorage.getItem('glot-interface-language');
+    return (savedLanguage as InterfaceLanguage) || 'fr';
+  });
+
+  const handleSetLanguage = (lang: InterfaceLanguage) => {
+    setLanguage(lang);
+    localStorage.setItem('glot-interface-language', lang);
+  };
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations['fr']] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
