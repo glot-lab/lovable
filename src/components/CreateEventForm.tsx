@@ -29,16 +29,6 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onEventCreated }) => 
     );
   };
 
-  const addPopularLanguages = () => {
-    const popularToAdd = POPULAR_LANGUAGES.filter(code => 
-      code !== sourceLanguage && !targetLanguages.includes(code)
-    );
-    setTargetLanguages(prev => [...prev, ...popularToAdd.slice(0, 5)]);
-  };
-
-  const clearTargetLanguages = () => {
-    setTargetLanguages([]);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,31 +108,9 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onEventCreated }) => 
 
           {/* Target Languages */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label className="text-sm font-semibold">
-                {t('organizer.workflow.targetLanguages')}
-              </Label>
-              <div className="flex gap-2">
-                <Button 
-                  type="button"
-                  variant="outline" 
-                  size="sm" 
-                  onClick={addPopularLanguages}
-                  className="text-xs"
-                >
-                  + {t('organizer.workflow.popular')}
-                </Button>
-                <Button 
-                  type="button"
-                  variant="outline" 
-                  size="sm" 
-                  onClick={clearTargetLanguages}
-                  className="text-xs"
-                >
-                  {t('organizer.workflow.clear')}
-                </Button>
-              </div>
-            </div>
+            <Label className="text-sm font-semibold">
+              {t('organizer.workflow.targetLanguages')}
+            </Label>
 
             {/* Selected Languages */}
             {targetLanguages.length > 0 && (
