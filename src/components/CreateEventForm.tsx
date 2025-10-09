@@ -63,7 +63,6 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onEventCreated }) => 
               id="eventTitle"
               value={eventTitle}
               onChange={(e) => setEventTitle(e.target.value)}
-              placeholder={t('organizer.workflow.eventTitlePlaceholder')}
               className="w-full"
               required
             />
