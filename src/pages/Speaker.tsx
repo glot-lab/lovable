@@ -241,7 +241,7 @@ const Speaker = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center pb-32 pt-8">
+      <div className="min-h-screen bg-background flex flex-col items-center pb-40 pt-8">
         <InterfaceLanguageSelector />
 
         {/* Logo */}
