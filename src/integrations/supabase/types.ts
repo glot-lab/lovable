@@ -71,6 +71,7 @@ export type Database = {
           id: string
           is_active: boolean
           speaker_id: string | null
+          speaker_key: string | null
         }
         Insert: {
           connected_at?: string | null
@@ -80,6 +81,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           speaker_id?: string | null
+          speaker_key?: string | null
         }
         Update: {
           connected_at?: string | null
@@ -89,6 +91,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           speaker_id?: string | null
+          speaker_key?: string | null
         }
         Relationships: [
           {
