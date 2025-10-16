@@ -14,16 +14,37 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({ children, requireRole }: ProtectedRouteProps) => {
   const { user, isLoading, hasRole } = useAuth();
   const [roleCheck, setRoleCheck] = useState<boolean | null>(null);
+  const [checkingRole, setCheckingRole] = useState(false);
 
   useEffect(() => {
-    if (user && requireRole) {
-      hasRole(requireRole).then(setRoleCheck);
-    } else if (user && !requireRole) {
-      setRoleCheck(true);
-    }
+    const checkUserRole = async () => {
+      if (!user) {
+        setRoleCheck(null);
+        return;
+      }
+
+      if (!requireRole) {
+        setRoleCheck(true);
+        return;
+      }
+
+      setCheckingRole(true);
+      try {
+        const hasRequiredRole = await hasRole(requireRole);
+        setRoleCheck(hasRequiredRole);
+      } catch (error) {
+        console.error('Error checking role:', error);
+        setRoleCheck(false);
+      } finally {
+        setCheckingRole(false);
+      }
+    };
+
+    checkUserRole();
   }, [user, requireRole, hasRole]);
 
-  if (isLoading || (requireRole && roleCheck === null)) {
+  // Show loading spinner while auth is loading OR while checking role
+  if (isLoading || checkingRole || (user && requireRole && roleCheck === null)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -31,11 +52,13 @@ export const ProtectedRoute = ({ children, requireRole }: ProtectedRouteProps) =
     );
   }
 
+  // Redirect to auth if not logged in
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
 
-  if (requireRole && !roleCheck) {
+  // Show access denied if role check failed
+  if (requireRole && roleCheck === false) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
