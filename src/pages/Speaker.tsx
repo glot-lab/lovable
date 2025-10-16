@@ -46,24 +46,33 @@ const Speaker = () => {
   const analyserRef = useRef<AnalyserNode | null>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
 
-  // Get available audio devices and handle navigation from organizer
-  useEffect(() => {
-    const getAudioDevices = async () => {
-      try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const audioInputs = devices.filter(device => device.kind === 'audioinput');
-        setAudioDevices(audioInputs);
-        if (audioInputs.length > 0) {
-          setSelectedDevice(audioInputs[0].deviceId);
-        }
-      } catch (error) {
-        console.error('Error accessing audio devices:', error);
+  // Initialize audio devices after authentication
+  const initializeAudioDevices = async () => {
+    try {
+      // Demander l'accès au microphone
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      
+      // Récupérer la liste des périphériques
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const audioInputs = devices.filter(device => device.kind === 'audioinput');
+      
+      setAudioDevices(audioInputs);
+      if (audioInputs.length > 0) {
+        setSelectedDevice(audioInputs[0].deviceId);
       }
-    };
+    } catch (error) {
+      console.error('Error accessing audio devices:', error);
+      toast({
+        title: t('common.error'),
+        description: "Impossible d'accéder au microphone. Veuillez autoriser l'accès.",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
 
-    getAudioDevices();
-
+  // Handle navigation from organizer flow
+  useEffect(() => {
     // Check if navigating from organizer flow
     if (location.state?.eventData && location.state?.autoLogin) {
       const eventData = location.state.eventData;
@@ -77,9 +86,9 @@ const Speaker = () => {
     }
   }, [location.state]);
 
-  // Audio monitoring for volume meter
+  // Audio monitoring for volume meter - only when logged in
   useEffect(() => {
-    if (selectedDevice && !isBroadcasting) {
+    if (isLoggedIn && selectedDevice && !isBroadcasting) {
       setupAudioMonitoring();
     }
 
@@ -91,7 +100,7 @@ const Speaker = () => {
         audioContextRef.current.close();
       }
     };
-  }, [selectedDevice]);
+  }, [selectedDevice, isLoggedIn]);
 
   const setupAudioMonitoring = async () => {
     try {
@@ -161,6 +170,9 @@ const Speaker = () => {
       setSourceLanguage(eventInfo.source_language);
       setSpeakerSessionId(sessionId);
       setIsLoggedIn(true);
+
+      // Demander l'accès au microphone après la validation
+      await initializeAudioDevices();
 
       toast({
         title: t('common.success'),
