@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,7 @@ import { fr } from 'date-fns/locale';
 
 const AccountView = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   
   const { data: profile } = useQuery({
     queryKey: ['profile', user?.id],
@@ -61,7 +63,7 @@ const AccountView = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              Événements créés
+              {t('organizer.account.eventsCreated')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -73,7 +75,7 @@ const AccountView = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Users className="h-4 w-4" />
-              Participants totaux
+              {t('organizer.account.totalParticipants')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -85,7 +87,7 @@ const AccountView = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
               <Clock className="h-4 w-4" />
-              Membre depuis
+              {t('organizer.account.memberSince')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -102,14 +104,14 @@ const AccountView = () => {
       {/* Profile Information */}
       <Card>
         <CardHeader>
-          <CardTitle>Informations du compte</CardTitle>
+          <CardTitle>{t('organizer.account.accountInfo')}</CardTitle>
           <CardDescription>
-            Gérez vos informations personnelles
+            {t('organizer.account.accountDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('organizer.account.email')}</Label>
             <Input
               id="email"
               value={profile?.email || ''}
@@ -119,25 +121,25 @@ const AccountView = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="full-name">Nom complet</Label>
+            <Label htmlFor="full-name">{t('organizer.account.fullName')}</Label>
             <Input
               id="full-name"
               value={profile?.full_name || ''}
-              placeholder="Votre nom complet"
+              placeholder={t('organizer.account.fullNamePlaceholder')}
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="company">Entreprise</Label>
+            <Label htmlFor="company">{t('organizer.account.company')}</Label>
             <Input
               id="company"
               value={profile?.company_name || ''}
-              placeholder="Nom de votre entreprise"
+              placeholder={t('organizer.account.companyPlaceholder')}
             />
           </div>
 
           <Button className="w-full sm:w-auto" disabled>
-            Mettre à jour le profil (bientôt disponible)
+            {t('organizer.account.updateProfile')}
           </Button>
         </CardContent>
       </Card>
@@ -145,30 +147,30 @@ const AccountView = () => {
       {/* Settings */}
       <Card>
         <CardHeader>
-          <CardTitle>Paramètres</CardTitle>
+          <CardTitle>{t('organizer.account.settings')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Notifications email</p>
+              <p className="font-medium">{t('organizer.account.emailNotifications')}</p>
               <p className="text-sm text-muted-foreground">
-                Recevoir des notifications pour les événements
+                {t('organizer.account.emailNotificationsDesc')}
               </p>
             </div>
             <Button variant="outline" size="sm" disabled>
-              Bientôt disponible
+              {t('organizer.account.comingSoon')}
             </Button>
           </div>
           
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Changer le mot de passe</p>
+              <p className="font-medium">{t('organizer.account.changePassword')}</p>
               <p className="text-sm text-muted-foreground">
-                Modifier votre mot de passe de connexion
+                {t('organizer.account.changePasswordDesc')}
               </p>
             </div>
             <Button variant="outline" size="sm" disabled>
-              Bientôt disponible
+              {t('organizer.account.comingSoon')}
             </Button>
           </div>
         </CardContent>

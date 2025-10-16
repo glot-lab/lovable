@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -23,9 +24,9 @@ import type { Database } from '@/integrations/supabase/types';
 type Event = Database['public']['Tables']['events']['Row'];
 
 const eventSchema = z.object({
-  title: z.string().min(3, 'Titre trop court').max(200, 'Titre trop long'),
+  title: z.string().min(3).max(200),
   sourceLanguage: z.string(),
-  targetLanguages: z.array(z.string()).min(1, 'Au moins une langue cible requise'),
+  targetLanguages: z.array(z.string()).min(1),
   eventType: z.enum(['public', 'private']),
   scheduledAt: z.date().optional(),
 });
@@ -36,6 +37,7 @@ interface CreateEventViewProps {
 
 const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   
   const [title, setTitle] = useState('');
@@ -63,7 +65,16 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
         const newErrors: Record<string, string> = {};
         validation.error.errors.forEach(err => {
           if (err.path[0]) {
-            newErrors[err.path[0] as string] = err.message;
+            const path = err.path[0] as string;
+            if (path === 'title') {
+              if (err.code === 'too_small') {
+                newErrors[path] = t('organizer.create.titleTooShort');
+              } else if (err.code === 'too_big') {
+                newErrors[path] = t('organizer.create.titleTooLong');
+              }
+            } else if (path === 'targetLanguages') {
+              newErrors[path] = t('organizer.create.languageRequired');
+            }
           }
         });
         setErrors(newErrors);
@@ -98,7 +109,7 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['events'] });
-      toast.success('Événement créé avec succès !');
+      toast.success(t('organizer.create.success'));
       setCreatedEvent(data);
       
       // Reset form
@@ -109,7 +120,7 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
     },
     onError: (error: any) => {
       if (error.message !== 'Validation failed') {
-        toast.error('Erreur lors de la création de l\'événement');
+        toast.error(t('organizer.create.error'));
       }
     },
   });
@@ -131,21 +142,21 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
     <>
       <Card className="max-w-3xl mx-auto">
         <CardHeader>
-          <CardTitle>Créer un Nouvel Événement</CardTitle>
+          <CardTitle>{t('organizer.create.title')}</CardTitle>
           <CardDescription>
-            Configurez les paramètres de votre événement de traduction en temps réel
+            {t('organizer.create.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
             <div className="space-y-2">
-              <Label htmlFor="title">Titre de l'événement *</Label>
+              <Label htmlFor="title">{t('organizer.create.eventTitle')}</Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Ex: Conférence Tech 2025"
+                placeholder={t('organizer.create.eventTitlePlaceholder')}
               />
               {errors.title && (
                 <p className="text-sm text-destructive">{errors.title}</p>
@@ -154,7 +165,7 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
 
             {/* Scheduled Date */}
             <div className="space-y-2">
-              <Label>Date et heure (optionnel)</Label>
+              <Label>{t('organizer.create.eventDate')}</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -168,7 +179,7 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
                     {scheduledDate ? (
                       format(scheduledDate, 'PPP', { locale: fr })
                     ) : (
-                      <span>Choisir une date</span>
+                      <span>{t('organizer.create.chooseDate')}</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -183,13 +194,13 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
                 </PopoverContent>
               </Popover>
               <p className="text-xs text-muted-foreground">
-                Si non spécifié, l'événement sera actif immédiatement
+                {t('organizer.create.dateNote')}
               </p>
             </div>
 
             {/* Source Language */}
             <div className="space-y-2">
-              <Label htmlFor="source">Langue source *</Label>
+              <Label htmlFor="source">{t('organizer.create.sourceLanguage')}</Label>
               <select
                 id="source"
                 value={sourceLanguage}
@@ -206,7 +217,7 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
 
             {/* Target Languages */}
             <div className="space-y-2">
-              <Label>Langues de traduction *</Label>
+              <Label>{t('organizer.create.targetLanguages')}</Label>
               {targetLanguages.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-2">
                   {targetLanguages.map((langCode) => {
@@ -251,18 +262,18 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
 
             {/* Event Type */}
             <div className="space-y-2">
-              <Label>Type d'événement *</Label>
+              <Label>{t('organizer.create.eventType')}</Label>
               <RadioGroup value={eventType} onValueChange={(v) => setEventType(v as 'public' | 'private')}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="public" id="public" />
                   <Label htmlFor="public" className="font-normal cursor-pointer">
-                    Public - Accessible à tous avec le code
+                    {t('organizer.create.publicType')}
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="private" id="private" />
                   <Label htmlFor="private" className="font-normal cursor-pointer">
-                    Privé - Protégé par mot de passe (bientôt disponible)
+                    {t('organizer.create.privateType')}
                   </Label>
                 </div>
               </RadioGroup>
@@ -276,10 +287,10 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
               {createEventMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Création...
+                  {t('organizer.create.creating')}
                 </>
               ) : (
-                'Créer l\'Événement'
+                t('organizer.create.createButton')
               )}
             </Button>
           </form>
