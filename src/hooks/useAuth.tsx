@@ -55,7 +55,8 @@ export const useAuth = () => {
       if (error) throw error;
       toast.success('Connexion réussie !');
     } catch (error: any) {
-      toast.error(error.message || 'Erreur de connexion');
+      // Generic error message to prevent email enumeration
+      toast.error('Email ou mot de passe incorrect');
       throw error;
     }
   };
@@ -84,7 +85,8 @@ export const useAuth = () => {
       if (error) throw error;
       toast.success('Compte créé ! Vérifiez votre email.');
     } catch (error: any) {
-      toast.error(error.message || 'Erreur lors de l\'inscription');
+      // Generic error message to prevent information leakage
+      toast.error('Impossible de créer le compte. Veuillez réessayer.');
       throw error;
     }
   };
@@ -100,7 +102,8 @@ export const useAuth = () => {
       
       if (error) throw error;
     } catch (error: any) {
-      toast.error(error.message || 'Erreur de connexion Google');
+      // Generic error message
+      toast.error('Erreur de connexion. Veuillez réessayer.');
       throw error;
     }
   };
