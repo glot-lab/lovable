@@ -62,18 +62,14 @@ const Listener = () => {
         </div>
 
         {/* Header with Live indicator */}
-        <div className="relative border-b bg-card/80 backdrop-blur-md p-4 shadow-sm">
-          <div className="container mx-auto flex items-center justify-between max-w-4xl">
+        <div className="relative border-b bg-card/80 backdrop-blur-md p-6 shadow-sm">
+          <div className="container mx-auto flex items-center justify-center max-w-4xl">
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
                 <div className="absolute inset-0 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
               </div>
               <span className="text-sm font-semibold text-foreground uppercase tracking-wide">{t('listener.live')}</span>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span className="hidden sm:inline">🎧</span>
-              <span className="hidden sm:inline">{t('listener.realTimeTranslation')}</span>
             </div>
           </div>
         </div>
@@ -87,59 +83,64 @@ const Listener = () => {
               <CardContent className="p-8 text-center space-y-6">
                 
                 {/* Language Display */}
-                <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-                    <span className="text-2xl">{getLanguageByCode(selectedLanguage)?.flag}</span>
-                    <span className="text-lg font-semibold text-foreground">{getLanguageByCode(selectedLanguage)?.name}</span>
+                <div className="space-y-6">
+                  <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border-2 border-primary/30 backdrop-blur-sm">
+                    <span className="text-3xl">{getLanguageByCode(selectedLanguage)?.flag}</span>
+                    <span className="text-xl font-bold text-foreground">{getLanguageByCode(selectedLanguage)?.name}</span>
                   </div>
-                  <p className="text-muted-foreground text-sm">{t('listener.realTimeTranslation')}</p>
                 </div>
 
                 {/* Visual Audio Waves */}
-                <div className="flex items-center justify-center gap-2 h-20">
-                  {[...Array(5)].map((_, i) => (
+                <div className="flex items-center justify-center gap-3 h-32 py-8">
+                  {[...Array(7)].map((_, i) => (
                     <div
                       key={i}
-                      className={`w-2 rounded-full bg-gradient-to-t from-primary to-accent transition-all duration-300 ${
-                        isPlaying ? 'animate-pulse' : 'opacity-30'
+                      className={`w-3 rounded-full transition-all duration-300 ${
+                        isPlaying 
+                          ? 'bg-gradient-to-t from-primary via-accent to-primary animate-pulse shadow-lg' 
+                          : 'bg-muted opacity-40'
                       }`}
                       style={{
-                        height: isPlaying ? `${30 + (i % 3) * 20}px` : '20px',
-                        animationDelay: `${i * 0.1}s`,
+                        height: isPlaying ? `${40 + Math.sin(i) * 30}px` : '24px',
+                        animationDelay: `${i * 0.15}s`,
+                        boxShadow: isPlaying ? '0 0 20px hsl(var(--primary) / 0.5)' : 'none',
                       }}
                     />
                   ))}
                 </div>
                 
                 {/* Play/Pause Button */}
-                <div className="relative inline-flex items-center justify-center">
-                  {/* Outer glow ring when playing */}
+                <div className="relative inline-flex items-center justify-center py-4">
+                  {/* Multiple glow rings when playing */}
                   {isPlaying && (
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent opacity-20 blur-2xl animate-pulse scale-150"></div>
+                    <>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-accent opacity-30 blur-3xl animate-pulse scale-150"></div>
+                      <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse scale-125" style={{ animationDelay: '0.5s' }}></div>
+                    </>
                   )}
                   
                   <Button 
                     size="lg"
                     onClick={togglePlayPause}
-                    className={`relative w-32 h-32 rounded-full bg-gradient-to-br from-primary via-primary to-accent hover:from-primary/90 hover:via-primary/90 hover:to-accent/90 text-white shadow-2xl touch-manipulation transition-all duration-500 border-4 border-background ${
+                    className={`relative w-40 h-40 rounded-full bg-gradient-to-br from-primary via-accent to-primary text-primary-foreground shadow-2xl touch-manipulation transition-all duration-700 border-4 ${
                       isPlaying 
-                        ? 'scale-110 shadow-[0_0_40px_rgba(var(--primary-rgb),0.4)]' 
-                        : 'hover:scale-105 shadow-[0_8px_30px_rgba(0,0,0,0.12)]'
+                        ? 'scale-110 shadow-[0_0_60px_hsl(var(--primary)/0.6)] border-primary/50 animate-pulse' 
+                        : 'hover:scale-105 shadow-[0_10px_40px_rgba(0,0,0,0.2)] border-background hover:shadow-[0_0_40px_hsl(var(--primary)/0.4)]'
                     }`}
                   >
-                    <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse"></div>
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent"></div>
                     {isPlaying ? (
-                      <Pause className="w-14 h-14 relative z-10" strokeWidth={2.5} />
+                      <Pause className="w-16 h-16 relative z-10 drop-shadow-lg" strokeWidth={3} />
                     ) : (
-                      <Play className="w-14 h-14 ml-2 relative z-10" strokeWidth={2.5} />
+                      <Play className="w-16 h-16 ml-2 relative z-10 drop-shadow-lg" strokeWidth={3} />
                     )}
                   </Button>
                 </div>
 
                 {/* Status Text */}
-                <div className="pt-2">
-                  <p className="text-sm font-medium text-foreground">
-                    {isPlaying ? '🎵 ' + t('listener.listening') : '⏸️ ' + t('listener.paused')}
+                <div className="pt-4">
+                  <p className="text-lg font-semibold text-foreground">
+                    {isPlaying ? t('listener.listening') : t('listener.paused')}
                   </p>
                 </div>
               </CardContent>
@@ -149,14 +150,11 @@ const Listener = () => {
             <Card className="border-0 shadow-lg bg-card/80 backdrop-blur-md hover:shadow-xl transition-shadow">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <span className="text-lg">🌍</span>
-                      {t('listener.switchLanguage')}
-                    </label>
-                  </div>
+                  <label className="text-sm font-semibold text-foreground">
+                    {t('listener.switchLanguage')}
+                  </label>
                   <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                    <SelectTrigger className="h-12 border-2 hover:border-primary/50 transition-colors">
+                    <SelectTrigger className="h-14 border-2 hover:border-primary/50 transition-colors text-base">
                        <SelectValue placeholder={t('listener.selectLanguage')} />
                     </SelectTrigger>
                      <SelectContent>
@@ -173,31 +171,6 @@ const Listener = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              <Card className="border-0 bg-card/60 backdrop-blur-sm">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl mb-1">🎯</div>
-                  <div className="text-xs text-muted-foreground">{t('listener.quality')}</div>
-                  <div className="text-sm font-semibold text-foreground">HD</div>
-                </CardContent>
-              </Card>
-              <Card className="border-0 bg-card/60 backdrop-blur-sm">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl mb-1">⚡</div>
-                  <div className="text-xs text-muted-foreground">{t('listener.latency')}</div>
-                  <div className="text-sm font-semibold text-foreground">&lt;1s</div>
-                </CardContent>
-              </Card>
-              <Card className="border-0 bg-card/60 backdrop-blur-sm">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl mb-1">🔒</div>
-                  <div className="text-xs text-muted-foreground">{t('listener.secure')}</div>
-                  <div className="text-sm font-semibold text-foreground">SSL</div>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
 
