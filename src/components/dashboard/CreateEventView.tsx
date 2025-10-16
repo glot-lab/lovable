@@ -27,7 +27,7 @@ const eventSchema = z.object({
   title: z.string().min(3).max(200),
   sourceLanguage: z.string(),
   targetLanguages: z.array(z.string()).min(1),
-  eventType: z.enum(['public', 'private']),
+  eventType: z.enum(['public']),
   scheduledAt: z.date().optional(),
 });
 
@@ -43,7 +43,7 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
   const [title, setTitle] = useState('');
   const [sourceLanguage, setSourceLanguage] = useState('fr');
   const [targetLanguages, setTargetLanguages] = useState<string[]>([]);
-  const [eventType, setEventType] = useState<'public' | 'private'>('public');
+  const [eventType, setEventType] = useState<'public'>('public');
   const [scheduledDate, setScheduledDate] = useState<Date>();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [createdEvent, setCreatedEvent] = useState<Event | null>(null);
@@ -262,17 +262,11 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
             {/* Event Type */}
             <div className="space-y-2">
               <Label>{t('organizer.create.eventType')}</Label>
-              <RadioGroup value={eventType} onValueChange={(v) => setEventType(v as 'public' | 'private')}>
+              <RadioGroup value={eventType} onValueChange={(v) => setEventType(v as 'public')}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="public" id="public" />
                   <Label htmlFor="public" className="font-normal cursor-pointer">
                     {t('organizer.create.publicType')}
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="private" id="private" />
-                  <Label htmlFor="private" className="font-normal cursor-pointer">
-                    {t('organizer.create.privateType')}
                   </Label>
                 </div>
               </RadioGroup>
