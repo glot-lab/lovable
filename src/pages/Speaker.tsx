@@ -241,17 +241,19 @@ const Speaker = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center pb-32">
+      <div className="min-h-screen bg-background flex flex-col items-center pb-32 pt-8">
         <InterfaceLanguageSelector />
 
+        {/* Logo */}
+        <div className="mb-12 animate-scale-in">
+          <a href="/" className="inline-block hover:opacity-90 transition-opacity">
+            <img src={glotLogoNew} alt="Glot" className="h-24 md:h-32 lg:h-36 w-auto" />
+          </a>
+        </div>
+
         {/* Login Form */}
-        <div className="container mx-auto px-4 max-w-md text-center">
-          {/* Logo */}
-          <div className="mb-2 animate-scale-in flex justify-center">
-            <a href="/" className="inline-block hover:opacity-90 transition-opacity">
-              <img src={glotLogoNew} alt="Glot" className="h-24 md:h-32 lg:h-36 w-auto" />
-            </a>
-          </div>
+        <div className="container mx-auto px-4 max-w-md text-center flex-1 flex items-center">
+          <div className="w-full">
           
           <Card className="glot-card">
             <CardHeader className="text-center space-y-2">
@@ -284,7 +286,8 @@ const Speaker = () => {
                 )}
               </Button>
             </CardContent>
-          </Card>
+            </Card>
+          </div>
         </div>
       </div>
     );
