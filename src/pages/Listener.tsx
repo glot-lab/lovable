@@ -94,16 +94,16 @@ const Listener = () => {
                   <Button 
                     size="lg"
                     onClick={togglePlayPause}
-                    className={`relative w-32 h-32 rounded-full bg-glot-turquoise hover:bg-glot-turquoise-dark text-white shadow-lg touch-manipulation transition-all duration-300 border-2 border-glot-turquoise/20 ${
+                    className={`relative w-48 h-16 rounded-2xl bg-glot-orange hover:bg-glot-orange-dark text-white shadow-lg touch-manipulation transition-all duration-300 border-2 border-glot-orange/20 ${
                       isPlaying 
-                        ? 'shadow-[0_0_30px_hsl(var(--glot-turquoise)/0.3)]' 
-                        : 'hover:shadow-[0_0_20px_hsl(var(--glot-turquoise)/0.2)]'
+                        ? 'shadow-[0_0_30px_hsl(var(--glot-orange)/0.3)]' 
+                        : 'hover:shadow-[0_0_20px_hsl(var(--glot-orange)/0.2)]'
                     }`}
                   >
                     {isPlaying ? (
-                      <Pause className="w-12 h-12 relative z-10" strokeWidth={2} />
+                      <Pause className="w-8 h-8 relative z-10" strokeWidth={2} />
                     ) : (
-                      <Play className="w-12 h-12 ml-1 relative z-10" strokeWidth={2} />
+                      <Play className="w-8 h-8 ml-1 relative z-10" strokeWidth={2} />
                     )}
                   </Button>
                 </div>
