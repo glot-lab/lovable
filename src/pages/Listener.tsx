@@ -177,7 +177,6 @@ const Listener = () => {
             <div className="space-y-2">
                <label className="text-sm font-medium">{t('listener.eventCode')}</label>
                <Input
-                 placeholder={t('listener.enterCode')}
                  value={eventCode}
                  onChange={(e) => setEventCode(e.target.value)}
                  className="text-center text-lg font-mono tracking-wider"

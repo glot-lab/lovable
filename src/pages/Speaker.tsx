@@ -275,7 +275,6 @@ const Speaker = () => {
                 <Input
                   id="broadcastKey"
                   type="password"
-                  placeholder={t('speaker.eventKeyPlaceholder')}
                   value={broadcastKey}
                   onChange={(e) => setBroadcastKey(e.target.value)}
                 />
