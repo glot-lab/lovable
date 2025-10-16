@@ -156,7 +156,6 @@ const CreateEventView = ({ onSuccess }: CreateEventViewProps) => {
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder={t('organizer.create.eventTitlePlaceholder')}
               />
               {errors.title && (
                 <p className="text-sm text-destructive">{errors.title}</p>
