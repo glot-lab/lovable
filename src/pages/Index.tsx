@@ -131,7 +131,7 @@ const Index = () => {
             {/* Speaker Link */}
             <Link 
               to="/speaker"
-              className="text-sm text-white/70 hover:text-white underline underline-offset-4 transition-colors mt-8 animate-fade-in"
+              className="text-sm text-white/70 hover:text-white underline underline-offset-4 transition-colors mt-16 animate-fade-in"
             >
               {t('nav.speakerLink')}
             </Link>
