@@ -14,16 +14,242 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      event_participants: {
+        Row: {
+          created_at: string
+          device_info: Json | null
+          event_id: string
+          id: string
+          joined_at: string
+          left_at: string | null
+          listener_id: string | null
+          selected_language: string
+        }
+        Insert: {
+          created_at?: string
+          device_info?: Json | null
+          event_id: string
+          id?: string
+          joined_at?: string
+          left_at?: string | null
+          listener_id?: string | null
+          selected_language: string
+        }
+        Update: {
+          created_at?: string
+          device_info?: Json | null
+          event_id?: string
+          id?: string
+          joined_at?: string
+          left_at?: string | null
+          listener_id?: string | null
+          selected_language?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_participants_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_participants_listener_id_fkey"
+            columns: ["listener_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_speakers: {
+        Row: {
+          connected_at: string | null
+          created_at: string
+          disconnected_at: string | null
+          event_id: string
+          id: string
+          is_active: boolean
+          speaker_id: string | null
+        }
+        Insert: {
+          connected_at?: string | null
+          created_at?: string
+          disconnected_at?: string | null
+          event_id: string
+          id?: string
+          is_active?: boolean
+          speaker_id?: string | null
+        }
+        Update: {
+          connected_at?: string | null
+          created_at?: string
+          disconnected_at?: string | null
+          event_id?: string
+          id?: string
+          is_active?: boolean
+          speaker_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_speakers_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_speakers_speaker_id_fkey"
+            columns: ["speaker_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          created_at: string
+          ended_at: string | null
+          event_code: string
+          event_type: Database["public"]["Enums"]["event_type"]
+          id: string
+          organizer_id: string
+          scheduled_at: string | null
+          source_language: string
+          speaker_key: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["event_status"]
+          target_languages: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          ended_at?: string | null
+          event_code: string
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          organizer_id: string
+          scheduled_at?: string | null
+          source_language: string
+          speaker_key: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          target_languages: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          ended_at?: string | null
+          event_code?: string
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          organizer_id?: string
+          scheduled_at?: string | null
+          source_language?: string
+          speaker_key?: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          target_languages?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          company_name: string | null
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          company_name?: string | null
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          company_name?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_event_code: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      generate_speaker_key: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "organizer" | "speaker" | "listener"
+      event_status: "draft" | "scheduled" | "active" | "ended" | "archived"
+      event_type: "public" | "private"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +376,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "organizer", "speaker", "listener"],
+      event_status: ["draft", "scheduled", "active", "ended", "archived"],
+      event_type: ["public", "private"],
+    },
   },
 } as const
