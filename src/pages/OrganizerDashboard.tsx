@@ -15,6 +15,7 @@ const OrganizerDashboard = () => {
   const { user, signOut } = useAuth();
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('events');
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const { data: profile } = useQuery({
     queryKey: ['profile', user?.id],
@@ -31,6 +32,17 @@ const OrganizerDashboard = () => {
     },
     enabled: !!user,
   });
+
+  const handleSignOut = async () => {
+    setIsLoggingOut(true);
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Sign out error:', error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -108,11 +120,12 @@ const OrganizerDashboard = () => {
           <Button
             variant="outline"
             size="lg"
-            onClick={signOut}
+            onClick={handleSignOut}
+            disabled={isLoggingOut}
             className="gap-2 w-full max-w-xs"
           >
             <LogOut className="h-4 w-4" />
-            {t('organizer.logout')}
+            {isLoggingOut ? 'Déconnexion...' : t('organizer.logout')}
           </Button>
         </div>
       </main>

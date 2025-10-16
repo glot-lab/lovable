@@ -94,20 +94,21 @@ export const useAuth = () => {
 
   const signOut = async () => {
     try {
-      // Clear local state first
-      setUser(null);
-      setSession(null);
-      
+      // D'abord appeler signOut côté serveur
       const { error } = await supabase.auth.signOut();
-      // Ignore session missing errors as we've already cleared the state
-      if (error && !error.message.includes('session')) {
-        throw error;
+      
+      // Ignorer toutes les erreurs de session
+      if (error && !error.message.toLowerCase().includes('session')) {
+        console.error('Logout error:', error);
       }
+      
       toast.success('Déconnexion réussie');
     } catch (error: any) {
       console.error('Logout error:', error);
-      toast.error('Erreur de déconnexion');
-      throw error;
+    } finally {
+      // TOUJOURS nettoyer le state local à la fin
+      setUser(null);
+      setSession(null);
     }
   };
 

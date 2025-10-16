@@ -18,13 +18,17 @@ export const ProtectedRoute = ({ children, requireRole }: ProtectedRouteProps) =
 
   useEffect(() => {
     const checkUserRole = async () => {
+      // Ne rien faire si pas d'utilisateur
       if (!user) {
         setRoleCheck(null);
+        setCheckingRole(false);
         return;
       }
 
+      // Si pas de rôle requis, autoriser l'accès
       if (!requireRole) {
         setRoleCheck(true);
+        setCheckingRole(false);
         return;
       }
 
