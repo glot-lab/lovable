@@ -75,10 +75,7 @@ const EventsListView = () => {
       
       const { data, error } = await supabase
         .from('events')
-        .select(`
-          *,
-          event_participants(count)
-        `)
+        .select('*')
         .eq('organizer_id', user.id)
         .order('created_at', { ascending: false });
       
@@ -158,7 +155,7 @@ const EventsListView = () => {
             <CardTitle className="text-sm font-medium">{t('organizer.events.activeEvents')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-green-600">{stats.active}</div>
+            <div className="text-3xl font-bold text-primary">{stats.active}</div>
           </CardContent>
         </Card>
         <Card>
@@ -166,7 +163,7 @@ const EventsListView = () => {
             <CardTitle className="text-sm font-medium">{t('organizer.events.scheduledEvents')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-blue-600">{stats.scheduled}</div>
+            <div className="text-3xl font-bold text-accent">{stats.scheduled}</div>
           </CardContent>
         </Card>
       </div>

@@ -41,14 +41,20 @@ const AccountView = () => {
         .select('id, created_at')
         .eq('organizer_id', user.id);
       
-      const { count: totalParticipants } = await supabase
-        .from('event_participants')
-        .select('*', { count: 'exact', head: true })
-        .in('event_id', events?.map(e => e.id) || []);
+      // Only query participants if there are events
+      let totalParticipants = 0;
+      if (events && events.length > 0) {
+        const { count } = await supabase
+          .from('event_participants')
+          .select('*', { count: 'exact', head: true })
+          .in('event_id', events.map(e => e.id));
+        
+        totalParticipants = count || 0;
+      }
       
       return {
         totalEvents: events?.length || 0,
-        totalParticipants: totalParticipants || 0,
+        totalParticipants,
         memberSince: events?.[0]?.created_at,
       };
     },
