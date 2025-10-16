@@ -79,7 +79,7 @@ const Listener = () => {
             
             {/* Event Info Card */}
             <Card className="glot-card border-border/30">
-              <CardContent className="p-12 text-center space-y-8">
+              <CardContent className="p-12 text-center space-y-12">
                 
                 {/* Language Display */}
                 <div className="space-y-4">
@@ -87,25 +87,6 @@ const Listener = () => {
                     <span className="text-2xl">{getLanguageByCode(selectedLanguage)?.flag}</span>
                     <span className="text-base font-semibold text-foreground">{getLanguageByCode(selectedLanguage)?.name}</span>
                   </div>
-                </div>
-
-                {/* Visual Audio Waves */}
-                <div className="flex items-center justify-center gap-2 h-24 py-6">
-                  {[...Array(5)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-1.5 rounded-full transition-all duration-500 ${
-                        isPlaying 
-                          ? 'bg-glot-turquoise' 
-                          : 'bg-muted/40'
-                      }`}
-                      style={{
-                        height: isPlaying ? `${30 + (i % 3) * 15}px` : '16px',
-                        opacity: isPlaying ? 0.8 : 0.3,
-                        transform: isPlaying ? `scaleY(${1 + Math.sin(Date.now() / 200 + i) * 0.3})` : 'scaleY(1)',
-                      }}
-                    />
-                  ))}
                 </div>
                 
                 {/* Play/Pause Button */}
@@ -125,13 +106,6 @@ const Listener = () => {
                       <Play className="w-12 h-12 ml-1 relative z-10" strokeWidth={2} />
                     )}
                   </Button>
-                </div>
-
-                {/* Status Text */}
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {isPlaying ? t('listener.listening') : t('listener.paused')}
-                  </p>
                 </div>
               </CardContent>
             </Card>
