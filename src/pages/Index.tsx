@@ -127,6 +127,14 @@ const Index = () => {
                 </Link>
               </Button>
             </div>
+            
+            {/* Speaker Link */}
+            <Link 
+              to="/speaker"
+              className="text-sm text-white/70 hover:text-white underline underline-offset-4 transition-colors mt-3 animate-fade-in"
+            >
+              {t('nav.speakerLink')}
+            </Link>
           </div>
         </div>
       </section>

@@ -13,6 +13,7 @@ const translations = {
     // Navigation
     'nav.joinEvent': 'Rejoindre un événement',
     'nav.organizer': 'Espace Organisateur',
+    'nav.speakerLink': 'Vous êtes orateur ? Cliquez ici',
     
     // Home page
     'home.tagline': 'Accédez à vos évènements, conférences et réunions dans la langue de votre choix.',
@@ -181,6 +182,7 @@ const translations = {
     // Navigation
     'nav.joinEvent': 'Join Event',
     'nav.organizer': 'Organizer Space',
+    'nav.speakerLink': 'Are you a speaker? Click here',
     
     // Home page
     'home.tagline': 'Access your events, conferences and meetings in the language of your choice.',
