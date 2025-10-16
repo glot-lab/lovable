@@ -245,11 +245,11 @@ const Speaker = () => {
         <InterfaceLanguageSelector />
 
         {/* Login Form */}
-        <div className="container mx-auto px-4 max-w-md">
+        <div className="container mx-auto px-4 max-w-md text-center">
           {/* Logo */}
-          <div className="mb-2 animate-scale-in">
+          <div className="mb-2 animate-scale-in flex justify-center">
             <a href="/" className="inline-block hover:opacity-90 transition-opacity">
-              <img src={glotLogoNew} alt="Glot" className="h-24 md:h-32 lg:h-36 w-auto mx-auto" />
+              <img src={glotLogoNew} alt="Glot" className="h-24 md:h-32 lg:h-36 w-auto" />
             </a>
           </div>
           
