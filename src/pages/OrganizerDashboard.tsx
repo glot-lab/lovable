@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LogOut, Calendar, Plus, BarChart3, User } from 'lucide-react';
@@ -12,27 +14,51 @@ const OrganizerDashboard = () => {
   const { user, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState('events');
 
+  const { data: profile } = useQuery({
+    queryKey: ['profile', user?.id],
+    queryFn: async () => {
+      if (!user) return null;
+      
+      const { data } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single();
+      
+      return data;
+    },
+    enabled: !!user,
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">Glot Dashboard</h1>
-            <span className="text-sm text-muted-foreground">
-              {user?.email}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <InterfaceLanguageSelector />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={signOut}
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Déconnexion
-            </Button>
+        <div className="container mx-auto px-4 py-3 md:py-4">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            {/* Title and Name */}
+            <div className="flex flex-col gap-1">
+              <h1 className="text-xl md:text-2xl font-bold">Glot Dashboard</h1>
+              {profile?.full_name && (
+                <span className="text-sm text-muted-foreground">
+                  {profile.full_name}
+                </span>
+              )}
+            </div>
+            
+            {/* Actions */}
+            <div className="flex items-center gap-2 justify-end">
+              <InterfaceLanguageSelector />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={signOut}
+                className="gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="hidden sm:inline">Déconnexion</span>
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -41,21 +67,25 @@ const OrganizerDashboard = () => {
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full max-w-2xl grid-cols-4 mx-auto">
-            <TabsTrigger value="events" className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              Mes Événements
+            <TabsTrigger value="events" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
+              <Calendar className="h-4 w-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Mes Événements</span>
+              <span className="sm:hidden text-xs">Événements</span>
             </TabsTrigger>
-            <TabsTrigger value="create" className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              Créer
+            <TabsTrigger value="create" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
+              <Plus className="h-4 w-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Créer</span>
+              <span className="sm:hidden text-xs">Créer</span>
             </TabsTrigger>
-            <TabsTrigger value="monitoring" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
-              Monitoring
+            <TabsTrigger value="monitoring" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
+              <BarChart3 className="h-4 w-4 flex-shrink-0" />
+              <span className="hidden lg:inline">Monitoring</span>
+              <span className="lg:hidden text-xs">Stats</span>
             </TabsTrigger>
-            <TabsTrigger value="account" className="flex items-center gap-2">
-              <User className="h-4 w-4" />
-              Mon Compte
+            <TabsTrigger value="account" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
+              <User className="h-4 w-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Mon Compte</span>
+              <span className="sm:hidden text-xs">Compte</span>
             </TabsTrigger>
           </TabsList>
 
