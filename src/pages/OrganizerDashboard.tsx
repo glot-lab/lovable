@@ -59,20 +59,20 @@ const OrganizerDashboard = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full max-w-2xl grid-cols-4 mx-auto">
             <TabsTrigger value="events" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
-              <Calendar className="h-4 w-4 flex-shrink-0" />
+              <Calendar className="h-4 w-4 flex-shrink-0 hidden sm:inline-block" />
               <span className="hidden sm:inline">{t('organizer.tabs.myEvents')}</span>
               <span className="sm:hidden text-xs">{t('organizer.tabs.events')}</span>
             </TabsTrigger>
             <TabsTrigger value="create" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
-              <Plus className="h-4 w-4 flex-shrink-0" />
+              <Plus className="h-4 w-4 flex-shrink-0 hidden sm:inline-block" />
               <span className="text-xs sm:text-sm">{t('organizer.tabs.create')}</span>
             </TabsTrigger>
             <TabsTrigger value="monitoring" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
-              <BarChart3 className="h-4 w-4 flex-shrink-0" />
+              <BarChart3 className="h-4 w-4 flex-shrink-0 hidden sm:inline-block" />
               <span className="text-xs sm:text-sm">{t('organizer.tabs.stats')}</span>
             </TabsTrigger>
             <TabsTrigger value="account" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
-              <User className="h-4 w-4 flex-shrink-0" />
+              <User className="h-4 w-4 flex-shrink-0 hidden sm:inline-block" />
               <span className="hidden sm:inline">{t('organizer.tabs.account')}</span>
               <span className="sm:hidden text-xs">{t('organizer.tabs.account')}</span>
             </TabsTrigger>
