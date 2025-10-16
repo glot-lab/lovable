@@ -35,7 +35,7 @@ const OrganizerDashboard = () => {
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-3 md:py-4">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center justify-between">
             {/* Title and Name */}
             <div className="flex flex-col gap-1">
               <h1 className="text-xl md:text-2xl font-bold">Glot Dashboard</h1>
@@ -46,19 +46,8 @@ const OrganizerDashboard = () => {
               )}
             </div>
             
-            {/* Actions */}
-            <div className="flex items-center gap-2 justify-end">
-              <InterfaceLanguageSelector />
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={signOut}
-                className="gap-2"
-              >
-                <LogOut className="h-4 w-4" />
-                <span className="hidden sm:inline">Déconnexion</span>
-              </Button>
-            </div>
+            {/* Language Selector */}
+            <InterfaceLanguageSelector />
           </div>
         </div>
       </header>
@@ -113,6 +102,19 @@ const OrganizerDashboard = () => {
             <AccountView />
           </TabsContent>
         </Tabs>
+
+        {/* Logout Button at Bottom */}
+        <div className="mt-12 pb-8 flex justify-center">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={signOut}
+            className="gap-2 w-full max-w-xs"
+          >
+            <LogOut className="h-4 w-4" />
+            Se déconnecter
+          </Button>
+        </div>
       </main>
     </div>
   );
