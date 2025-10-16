@@ -91,22 +91,6 @@ export const useAuth = () => {
     }
   };
 
-  const signInWithGoogle = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/`,
-        },
-      });
-      
-      if (error) throw error;
-    } catch (error: any) {
-      // Generic error message
-      toast.error('Erreur de connexion. Veuillez réessayer.');
-      throw error;
-    }
-  };
 
   const signOut = async () => {
     try {
@@ -138,7 +122,6 @@ export const useAuth = () => {
     isLoading,
     signIn,
     signUp,
-    signInWithGoogle,
     signOut,
     hasRole,
   };
