@@ -113,7 +113,7 @@ const translations = {
     // Speaker/Broadcaster interface
     'speaker.title': 'Interface Orateur',
     'speaker.subtitle': 'Diffusion et contrôle de la traduction en temps réel',
-    'speaker.loginEvent': 'Se connecter à l\'événement',
+    'speaker.loginEvent': 'Démarrer la diffusion',
     'speaker.eventKey': 'Clé de diffusion',
     'speaker.eventKeyPlaceholder': 'Entrez la clé de diffusion de l\'événement',
     'speaker.audioSetup': 'Configuration Audio',
@@ -383,7 +383,7 @@ const translations = {
     'speaker.title': 'Speaker Interface',
     'speaker.goLive': 'Go Live as Speaker',
     'speaker.subtitle': 'Real-time broadcast and translation control',
-    'speaker.loginEvent': 'Connect to Event',
+    'speaker.loginEvent': 'Start Broadcasting',
     'speaker.eventKey': 'Broadcast Key',
     'speaker.eventKeyPlaceholder': 'Enter event broadcast key',
     'speaker.audioSetup': 'Audio Setup',
