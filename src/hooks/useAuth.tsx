@@ -93,23 +93,21 @@ export const useAuth = () => {
 
 
   const signOut = async () => {
-    try {
-      // D'abord appeler signOut côté serveur
-      const { error } = await supabase.auth.signOut();
-      
-      // Ignorer toutes les erreurs de session
-      if (error && !error.message.toLowerCase().includes('session')) {
-        console.error('Logout error:', error);
+    // 1. Nettoyer IMMÉDIATEMENT le state local pour un feedback instantané
+    setUser(null);
+    setSession(null);
+    
+    // 2. Afficher le toast de succès immédiatement
+    toast.success('Déconnexion réussie');
+    
+    // 3. Appel serveur en arrière-plan (fire-and-forget)
+    // On ne bloque pas l'UI pour attendre la réponse
+    supabase.auth.signOut().catch((error) => {
+      // Ignorer silencieusement les erreurs de session expirée
+      if (!error.message?.toLowerCase().includes('session')) {
+        console.error('Background logout error:', error);
       }
-      
-      toast.success('Déconnexion réussie');
-    } catch (error: any) {
-      console.error('Logout error:', error);
-    } finally {
-      // TOUJOURS nettoyer le state local à la fin
-      setUser(null);
-      setSession(null);
-    }
+    });
   };
 
   const hasRole = useCallback(async (role: AppRole): Promise<boolean> => {

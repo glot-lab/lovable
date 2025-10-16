@@ -35,13 +35,8 @@ const OrganizerDashboard = () => {
 
   const handleSignOut = async () => {
     setIsLoggingOut(true);
-    try {
-      await signOut();
-    } catch (error) {
-      console.error('Sign out error:', error);
-    } finally {
-      setIsLoggingOut(false);
-    }
+    await signOut();
+    // signOut est maintenant instantané, la navigation se fera automatiquement via ProtectedRoute
   };
 
   return (
