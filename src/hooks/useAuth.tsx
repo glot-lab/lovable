@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -94,27 +94,40 @@ export const useAuth = () => {
 
   const signOut = async () => {
     try {
+      // Clear local state first
+      setUser(null);
+      setSession(null);
+      
       const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      // Ignore session missing errors as we've already cleared the state
+      if (error && !error.message.includes('session')) {
+        throw error;
+      }
       toast.success('Déconnexion réussie');
     } catch (error: any) {
-      toast.error(error.message || 'Erreur de déconnexion');
+      console.error('Logout error:', error);
+      toast.error('Erreur de déconnexion');
       throw error;
     }
   };
 
-  const hasRole = async (role: AppRole): Promise<boolean> => {
+  const hasRole = useCallback(async (role: AppRole): Promise<boolean> => {
     if (!user) return false;
     
-    const { data } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', user.id)
-      .eq('role', role)
-      .maybeSingle();
-    
-    return !!data;
-  };
+    try {
+      const { data } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('role', role)
+        .maybeSingle();
+      
+      return !!data;
+    } catch (error) {
+      console.error('Error checking role:', error);
+      return false;
+    }
+  }, [user]);
 
   return {
     user,
