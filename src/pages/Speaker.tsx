@@ -241,11 +241,11 @@ const Speaker = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center">
         <InterfaceLanguageSelector />
 
         {/* Login Form */}
-        <div className="container mx-auto px-4 py-12 max-w-md">
+        <div className="container mx-auto px-4 max-w-md">
           <Card className="glot-card">
             <CardHeader className="text-center space-y-2">
               <CardTitle className="text-2xl">{t('speaker.loginEvent')}</CardTitle>
