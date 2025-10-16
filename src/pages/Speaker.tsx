@@ -247,9 +247,9 @@ const Speaker = () => {
         {/* Login Form */}
         <div className="container mx-auto px-4 max-w-md">
           {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <a href="/" className="hover:opacity-80 transition-opacity">
-              <img src={glotLogoNew} alt="Glot" className="h-16" />
+          <div className="mb-8 animate-scale-in">
+            <a href="/" className="inline-block hover:opacity-90 transition-opacity">
+              <img src={glotLogoNew} alt="Glot" className="h-24 md:h-32 lg:h-36 w-auto mx-auto" />
             </a>
           </div>
           
