@@ -9,14 +9,20 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
-import { Mic, MicOff, Settings, Users, Activity, ExternalLink, Circle, ArrowLeft } from "lucide-react";
+import { Mic, MicOff, Settings, Users, Activity, ExternalLink, Circle, ArrowLeft, Loader2 } from "lucide-react";
 import glotLogoNew from "@/assets/glot-logo-new.png";
 import { useLocation } from "react-router-dom";
+import { useSpeakerAuth } from "@/hooks/useSpeakerAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const Speaker = () => {
   const { t } = useLanguage();
   const location = useLocation();
+  const { toast } = useToast();
+  const { verifySpeakerKey, registerSpeakerConnection, updateSpeakerDisconnection } = useSpeakerAuth();
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [broadcastKey, setBroadcastKey] = useState('');
   const [selectedDevice, setSelectedDevice] = useState('');
   const [sourceLanguage, setSourceLanguage] = useState('en');
@@ -32,6 +38,8 @@ const Speaker = () => {
     de: 5
   });
   const [eventTitle, setEventTitle] = useState('');
+  const [eventId, setEventId] = useState('');
+  const [speakerSessionId, setSpeakerSessionId] = useState<string | null>(null);
   const [isTestingAudio, setIsTestingAudio] = useState(false);
   
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -117,11 +125,75 @@ const Speaker = () => {
     }
   };
 
-  const handleLogin = () => {
-    if (broadcastKey.trim()) {
+  const handleLogin = async () => {
+    if (!broadcastKey.trim()) return;
+
+    setIsLoggingIn(true);
+    
+    try {
+      // Verify speaker key and get event info
+      const eventInfo = await verifySpeakerKey(broadcastKey);
+      
+      if (!eventInfo) {
+        toast({
+          title: t('common.error'),
+          description: "Clé de diffusion invalide",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Register speaker connection
+      const sessionId = await registerSpeakerConnection(eventInfo.id, broadcastKey);
+      
+      if (!sessionId) {
+        toast({
+          title: t('common.error'),
+          description: "Erreur lors de l'enregistrement de la connexion",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Set event info and login
+      setEventId(eventInfo.id);
+      setEventTitle(eventInfo.title);
+      setSourceLanguage(eventInfo.source_language);
+      setSpeakerSessionId(sessionId);
       setIsLoggedIn(true);
+
+      toast({
+        title: t('common.success'),
+        description: `Connecté à l'événement : ${eventInfo.title}`,
+      });
+    } catch (error: any) {
+      console.error('Login error:', error);
+      
+      let errorMessage = "Impossible de se connecter";
+      if (error.message?.includes('archived')) {
+        errorMessage = "Cet événement a été archivé";
+      } else if (error.message?.includes('ended')) {
+        errorMessage = "Cet événement est terminé";
+      }
+      
+      toast({
+        title: t('common.error'),
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoggingIn(false);
     }
   };
+
+  // Cleanup on unmount - update disconnection time
+  useEffect(() => {
+    return () => {
+      if (speakerSessionId) {
+        updateSpeakerDisconnection(speakerSessionId);
+      }
+    };
+  }, [speakerSessionId]);
 
   const handleTestAudio = () => {
     setIsTestingAudio(true);
@@ -211,9 +283,16 @@ const Speaker = () => {
               <Button 
                 onClick={handleLogin} 
                 className="w-full"
-                disabled={!broadcastKey.trim()}
+                disabled={!broadcastKey.trim() || isLoggingIn}
               >
-                {t('listener.connect')}
+                {isLoggingIn ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Connexion...
+                  </>
+                ) : (
+                  t('listener.connect')
+                )}
               </Button>
             </CardContent>
           </Card>
@@ -234,9 +313,11 @@ const Speaker = () => {
                 <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hover:text-foreground" />
               </a>
               <div className="min-w-0">
-                <h1 className="text-lg sm:text-2xl font-bold truncate">{t('speaker.title')}</h1>
+                <h1 className="text-lg sm:text-2xl font-bold truncate">
+                  {eventTitle || t('speaker.title')}
+                </h1>
                 <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
-                  {t('speaker.subtitle')}
+                  {eventTitle ? t('speaker.subtitle') : t('speaker.subtitle')}
                 </p>
               </div>
             </div>
