@@ -241,7 +241,7 @@ const Speaker = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center pb-24">
         <InterfaceLanguageSelector />
 
         {/* Login Form */}
