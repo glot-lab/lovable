@@ -63,22 +63,23 @@ export const EventShareModal = ({ event, open, onClose }: EventShareModalProps) 
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="overflow-y-auto max-h-[calc(90vh-10rem)] pr-2 space-y-6">
           {/* QR Code Section */}
-          <div className="flex flex-col items-center space-y-4 p-6 border rounded-lg bg-card">
-            <div className="p-4 bg-white rounded-lg">
+          <div className="flex flex-col items-center space-y-4 p-4 sm:p-6 border rounded-xl bg-card">
+            <div className="p-3 sm:p-4 bg-white rounded-xl shadow-sm">
               <QRCodeSVG
                 id="qr-code"
                 value={listenerUrl}
-                size={200}
+                size={160}
                 level="H"
                 includeMargin
+                className="w-full h-auto max-w-[200px]"
               />
             </div>
             <p className="text-sm text-muted-foreground text-center">
-              Code d'accès : <span className="font-mono font-bold text-lg">{event.event_code}</span>
+              Code d'accès : <span className="font-mono font-bold text-lg text-glot-turquoise">{event.event_code}</span>
             </p>
-            <Button onClick={downloadQR} variant="outline" size="sm">
+            <Button onClick={downloadQR} variant="outline" size="sm" className="shadow-sm">
               <Download className="h-4 w-4 mr-2" />
               Télécharger QR Code
             </Button>
@@ -88,11 +89,12 @@ export const EventShareModal = ({ event, open, onClose }: EventShareModalProps) 
           <div className="space-y-2">
             <Label>Lien pour les participants (listeners)</Label>
             <div className="flex gap-2">
-              <Input value={listenerUrl} readOnly />
+              <Input value={listenerUrl} readOnly className="text-sm" />
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => copyToClipboard(listenerUrl, 'Lien listener')}
+                className="shrink-0"
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -103,11 +105,11 @@ export const EventShareModal = ({ event, open, onClose }: EventShareModalProps) 
           </div>
 
           {/* Speaker Key - Sensitive */}
-          <div className="space-y-2 p-4 border border-orange-500/50 rounded-lg bg-orange-500/5">
+          <div className="space-y-2 p-4 border border-glot-orange/50 rounded-xl bg-glot-orange/5">
             <div className="flex items-start gap-2 mb-2">
-              <AlertTriangle className="h-5 w-5 text-orange-500 mt-0.5" />
+              <AlertTriangle className="h-5 w-5 text-glot-orange mt-0.5 shrink-0" />
               <div>
-                <Label className="text-orange-600">Clé Speaker (confidentielle)</Label>
+                <Label className="text-glot-orange">Clé Speaker (confidentielle)</Label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Cette clé permet de diffuser l'audio. Ne la partagez qu'avec les intervenants autorisés.
                 </p>
@@ -118,12 +120,13 @@ export const EventShareModal = ({ event, open, onClose }: EventShareModalProps) 
                 type={showSpeakerKey ? 'text' : 'password'}
                 value={event.speaker_key}
                 readOnly
-                className="font-mono"
+                className="font-mono text-sm"
               />
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => setShowSpeakerKey(!showSpeakerKey)}
+                className="shrink-0"
               >
                 {showSpeakerKey ? (
                   <EyeOff className="h-4 w-4" />
@@ -135,6 +138,7 @@ export const EventShareModal = ({ event, open, onClose }: EventShareModalProps) 
                 variant="outline"
                 size="icon"
                 onClick={() => copyToClipboard(event.speaker_key, 'Clé speaker')}
+                className="shrink-0"
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -151,7 +155,7 @@ export const EventShareModal = ({ event, open, onClose }: EventShareModalProps) 
             </div>
           </div>
 
-          <Button onClick={onClose} className="w-full">
+          <Button onClick={onClose} className="w-full shadow-md">
             Terminé
           </Button>
         </div>
