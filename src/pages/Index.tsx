@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/hooks/useAuth";
+import { Link } from "react-router-dom";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
 import glotLogoWhite from "@/assets/glot-logo-white.png";
 
@@ -13,6 +15,7 @@ const heroImages = [
 
 const Index = () => {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -110,18 +113,18 @@ const Index = () => {
                 className="glot-button-white hover-lift w-full sm:w-auto" 
                 asChild
               >
-                <a href="/listener" className="flex items-center justify-center">
+                <Link to="/listener" className="flex items-center justify-center">
                   {t('nav.joinEvent')}
-                </a>
+                </Link>
               </Button>
               <Button 
                 size="lg" 
                 className="glot-button-white-outline hover-lift w-full sm:w-auto" 
                 asChild
               >
-                <a href="/organizer" className="flex items-center justify-center">
-                  {t('nav.organizer')}
-                </a>
+                <Link to={user ? "/organizer" : "/auth"} className="flex items-center justify-center">
+                  {user ? t('nav.organizer') : 'Se connecter'}
+                </Link>
               </Button>
             </div>
           </div>
