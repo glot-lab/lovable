@@ -40,9 +40,14 @@ export default {
           foreground: "hsl(var(--accent-foreground))",
         },
         glot: {
-          green: "hsl(var(--glot-green))",
-          "green-light": "hsl(var(--glot-green-light))",
-          "green-dark": "hsl(var(--glot-green-dark))",
+          turquoise: "hsl(var(--glot-turquoise))",
+          "turquoise-light": "hsl(var(--glot-turquoise-light))",
+          "turquoise-dark": "hsl(var(--glot-turquoise-dark))",
+          orange: "hsl(var(--glot-orange))",
+          "orange-light": "hsl(var(--glot-orange-light))",
+          "orange-dark": "hsl(var(--glot-orange-dark))",
+          navy: "hsl(var(--glot-navy))",
+          "navy-light": "hsl(var(--glot-navy-light))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",

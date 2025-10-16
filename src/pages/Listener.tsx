@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Play, Pause, Volume2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
@@ -167,35 +168,41 @@ const Listener = () => {
         </div>
 
         {/* Connection Form */}
-        <Card className="border-0 shadow-lg">
-          <CardHeader className="text-center space-y-1">
-             <CardTitle className="text-xl font-normal">{t('listener.connection')}</CardTitle>
+        <Card className="glot-card">
+          <CardHeader className="text-center space-y-2 pb-6">
+            <CardTitle className="text-2xl">{t('listener.connection')}</CardTitle>
+            <CardDescription>{t('listener.joinEvent')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             
             {/* Event Code */}
-            <div className="space-y-2">
-               <label className="text-sm font-medium">{t('listener.eventCode')}</label>
-               <Input
-                 value={eventCode}
-                 onChange={(e) => setEventCode(e.target.value)}
-                 className="text-center text-lg font-mono tracking-wider"
-               />
+            <div className="space-y-3">
+              <Label htmlFor="eventCode" className="text-sm font-semibold">
+                {t('listener.eventCode')}
+              </Label>
+              <Input
+                id="eventCode"
+                value={eventCode}
+                onChange={(e) => setEventCode(e.target.value)}
+                className="text-center text-lg font-mono tracking-wider uppercase"
+              />
             </div>
 
             {/* Language Selection */}
-            <div className="space-y-2">
-               <label className="text-sm font-medium">{t('listener.translationLanguage')}</label>
-               <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                 <SelectTrigger>
-                   <SelectValue placeholder={t('listener.selectLanguage')} />
-                 </SelectTrigger>
+            <div className="space-y-3">
+              <Label htmlFor="language" className="text-sm font-semibold">
+                {t('listener.translationLanguage')}
+              </Label>
+              <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                <SelectTrigger id="language" className="h-12">
+                  <SelectValue placeholder={t('listener.selectLanguage')} />
+                </SelectTrigger>
                 <SelectContent>
                   {availableLanguages.map((lang) => (
                     <SelectItem key={lang.code} value={lang.code}>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-2">
                         <span className="text-lg">{lang.flag}</span>
-                        <span className="text-foreground">{lang.name}</span>
+                        <span>{lang.name}</span>
                       </div>
                     </SelectItem>
                   ))}
@@ -205,14 +212,14 @@ const Listener = () => {
 
             {/* Error Message */}
             {connectionError && (
-              <div className="text-sm text-red-600 text-center p-2 bg-red-50 rounded-md">
+              <div className="text-sm text-destructive-foreground text-center p-3 bg-destructive/10 rounded-xl border border-destructive/20">
                 {connectionError}
               </div>
             )}
 
             {/* Connect Button */}
             <Button 
-              className="w-full glot-button-orange hover-lift" 
+              className="w-full glot-button-orange" 
               onClick={handleConnect}
               disabled={!eventCode || !selectedLanguage}
               size="lg"
@@ -223,17 +230,17 @@ const Listener = () => {
         </Card>
 
         {/* QR Code Alternative */}
-        <Card className="border-0 bg-muted/30">
+        <Card className="glot-card bg-muted/30">
           <CardContent className="p-6 text-center">
-            <div className="w-20 h-20 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4">
-              <div className="w-12 h-12 border-2 border-muted-foreground rounded-lg flex items-center justify-center">
+            <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="w-12 h-12 border-2 border-primary rounded-lg flex items-center justify-center">
                 <span className="text-2xl">📱</span>
               </div>
             </div>
-             <h3 className="font-medium mb-2">{t('listener.scanQRCode')}</h3>
-             <p className="text-sm text-muted-foreground">
-               {t('listener.scanQRDescription')}
-             </p>
+            <h3 className="font-semibold mb-2 text-lg">{t('listener.scanQRCode')}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {t('listener.scanQRDescription')}
+            </p>
           </CardContent>
         </Card>
 

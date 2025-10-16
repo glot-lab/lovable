@@ -106,26 +106,28 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <img src={glotLogo} alt="Glot" className="h-12 mx-auto mb-4" />
-          <CardTitle>Bienvenue sur Glot</CardTitle>
-          <CardDescription>
-            Connectez-vous pour gérer vos événements de traduction en temps réel
-          </CardDescription>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-muted p-4">
+      <Card className="w-full max-w-md glot-card">
+        <CardHeader className="text-center space-y-4">
+          <img src={glotLogo} alt="Glot" className="h-14 mx-auto" />
+          <div>
+            <CardTitle className="text-2xl mb-2">Bienvenue sur Glot</CardTitle>
+            <CardDescription className="text-base">
+              Connectez-vous pour gérer vos événements de traduction en temps réel
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="login">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="login">Connexion</TabsTrigger>
-              <TabsTrigger value="signup">Inscription</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 mb-8 h-12">
+              <TabsTrigger value="login" className="text-base">Connexion</TabsTrigger>
+              <TabsTrigger value="signup" className="text-base">Inscription</TabsTrigger>
             </TabsList>
 
             <TabsContent value="login">
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="login-email">Email</Label>
+              <form onSubmit={handleLogin} className="space-y-5">
+                <div className="space-y-3">
+                  <Label htmlFor="login-email" className="text-sm font-semibold">Email</Label>
                   <Input
                     id="login-email"
                     type="email"
@@ -134,8 +136,8 @@ const Auth = () => {
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="login-password">Mot de passe</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="login-password" className="text-sm font-semibold">Mot de passe</Label>
                   <Input
                     id="login-password"
                     type="password"
@@ -147,6 +149,7 @@ const Auth = () => {
                 <Button
                   type="submit"
                   className="w-full"
+                  size="lg"
                   disabled={loginLoading}
                 >
                   {loginLoading ? (
@@ -159,12 +162,12 @@ const Auth = () => {
                   )}
                 </Button>
                 
-                <div className="relative">
+                <div className="relative my-6">
                   <div className="absolute inset-0 flex items-center">
                     <span className="w-full border-t" />
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
+                    <span className="bg-card px-3 text-muted-foreground font-medium">
                       Ou continuer avec
                     </span>
                   </div>
@@ -174,6 +177,7 @@ const Auth = () => {
                   type="button"
                   variant="outline"
                   className="w-full"
+                  size="lg"
                   onClick={handleGoogleSignIn}
                 >
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">

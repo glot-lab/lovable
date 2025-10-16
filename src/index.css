@@ -17,31 +17,43 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 197 71% 63%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 13% 95%;
+    --secondary-foreground: 220 13% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 13% 97%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 197 71% 73%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent: 24 95% 65%;
+    --accent-foreground: 0 0% 100%;
     
-    --glot-green: 197 71% 73%;
-    --glot-green-light: 197 71% 83%;
-    --glot-green-dark: 197 71% 63%;
-    --glot-green-subtle: 197 71% 93%;
+    --glot-turquoise: 197 71% 73%;
+    --glot-turquoise-light: 197 71% 83%;
+    --glot-turquoise-dark: 197 71% 63%;
+    --glot-turquoise-subtle: 197 71% 95%;
+    
+    --glot-orange: 24 95% 65%;
+    --glot-orange-light: 24 95% 75%;
+    --glot-orange-dark: 24 95% 55%;
+    
+    --glot-navy: 220 40% 15%;
+    --glot-navy-light: 220 30% 25%;
 
     /* Gradients */
-    --gradient-glot: linear-gradient(135deg, hsl(var(--glot-green)), hsl(var(--glot-green-dark)));
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)/0.3));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--glot-turquoise)), hsl(var(--glot-turquoise-dark)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--glot-orange)), hsl(var(--glot-orange-dark)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)/0.5));
+    --gradient-overlay: linear-gradient(180deg, transparent, hsl(var(--background)/0.8));
 
     /* Shadows */
-    --shadow-glot: 0 10px 30px -10px hsl(var(--foreground) / 0.1);
-    --shadow-subtle: 0 4px 12px -4px hsl(var(--muted-foreground) / 0.08);
-    --shadow-elegant: 0 20px 60px -20px hsl(var(--foreground) / 0.15);
+    --shadow-sm: 0 1px 2px 0 hsl(var(--foreground) / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(var(--foreground) / 0.1), 0 2px 4px -1px hsl(var(--foreground) / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(var(--foreground) / 0.1), 0 4px 6px -2px hsl(var(--foreground) / 0.05);
+    --shadow-xl: 0 20px 25px -5px hsl(var(--foreground) / 0.1), 0 10px 10px -5px hsl(var(--foreground) / 0.04);
+    --shadow-accent: 0 8px 16px -4px hsl(var(--glot-orange) / 0.2);
+    --shadow-primary: 0 8px 16px -4px hsl(var(--glot-turquoise) / 0.2);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -88,13 +100,20 @@ All colors MUST be HSL.
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 197 71% 73%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent: 24 95% 65%;
+    --accent-foreground: 0 0% 100%;
     
-    --glot-green: 197 71% 73%;
-    --glot-green-light: 197 71% 83%;
-    --glot-green-dark: 197 71% 63%;
-    --glot-green-subtle: 197 71% 93%;
+    --glot-turquoise: 197 71% 73%;
+    --glot-turquoise-light: 197 71% 83%;
+    --glot-turquoise-dark: 197 71% 63%;
+    --glot-turquoise-subtle: 197 71% 95%;
+    
+    --glot-orange: 24 95% 65%;
+    --glot-orange-light: 24 95% 75%;
+    --glot-orange-dark: 24 95% 55%;
+    
+    --glot-navy: 220 40% 15%;
+    --glot-navy-light: 220 30% 25%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -119,7 +138,27 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-manrope;
+    @apply bg-background text-foreground font-manrope antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
   }
 }
 
@@ -180,15 +219,48 @@ All colors MUST be HSL.
 
   /* Interactive Effects */
   .hover-lift {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-0.5;
+    box-shadow: var(--shadow-lg);
   }
   
+  /* Modern Card Styles */
+  .glot-card {
+    @apply bg-card border border-border/50 rounded-2xl;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+  }
+
+  .glot-card:hover {
+    box-shadow: var(--shadow-md);
+    @apply border-border;
+  }
+
+  /* Button System */
   .glot-button {
-    @apply bg-glot-green hover:bg-glot-green-dark text-white font-semibold transition-all duration-200 shadow-lg hover:shadow-xl min-h-[48px] px-6 py-3;
+    @apply inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-200 min-h-[48px] px-6 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-primary);
+  }
+
+  .glot-button:hover:not(:disabled) {
+    @apply brightness-110 -translate-y-0.5;
+    box-shadow: var(--shadow-lg);
   }
   
   .glot-button-outline {
-    @apply border-2 border-glot-green text-glot-green bg-transparent hover:bg-glot-green hover:text-white font-semibold transition-all duration-200 min-h-[48px] px-6 py-3;
+    @apply border-2 bg-transparent font-semibold transition-all duration-200 min-h-[48px] px-6 py-3 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    border-color: hsl(var(--glot-turquoise));
+    color: hsl(var(--glot-turquoise-dark));
+  }
+
+  .glot-button-outline:hover:not(:disabled) {
+    background: hsl(var(--glot-turquoise));
+    color: white;
   }
 
   .glot-button-white {
@@ -267,51 +339,47 @@ All colors MUST be HSL.
   }
 
   .glot-button-orange {
-    background-color: #FF8E56 !important;
-    color: white !important;
-    border: none !important;
-    font-weight: 600 !important;
-    transition: all 0.2s ease !important;
-    box-shadow: 0 4px 6px -1px rgba(255, 142, 86, 0.2), 0 2px 4px -1px rgba(255, 142, 86, 0.1) !important;
-    min-height: 48px !important;
-    padding: 12px 24px !important;
-    border-radius: 0.75rem !important;
-    outline: none !important;
-    @apply inline-flex items-center justify-center;
+    @apply inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-200 min-h-[48px] px-6 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+    background: var(--gradient-accent);
+    color: white;
+    box-shadow: var(--shadow-accent);
   }
   
-  .glot-button-orange:hover {
-    background-color: #E8774A !important;
-    color: white !important;
-    box-shadow: 0 10px 15px -3px rgba(255, 142, 86, 0.3), 0 4px 6px -2px rgba(255, 142, 86, 0.15) !important;
-    transform: translateY(-1px) !important;
+  .glot-button-orange:hover:not(:disabled) {
+    @apply brightness-110 -translate-y-0.5;
+    box-shadow: var(--shadow-lg);
   }
   
-  .glot-button-orange:focus,
-  .glot-button-orange:focus-visible {
-    background-color: #FF8E56 !important;
-    color: white !important;
-    outline: 2px solid rgba(255, 142, 86, 0.5) !important;
-    outline-offset: 2px !important;
-    box-shadow: 0 0 0 0 transparent !important;
-  }
-  
-  .glot-button-orange:active {
-    background-color: #D6653E !important;
-    color: white !important;
-    transform: scale(0.98) !important;
-    box-shadow: 0 1px 2px 0 rgba(255, 142, 86, 0.2) !important;
+  .glot-button-orange:active:not(:disabled) {
+    @apply scale-[0.98];
   }
 
-  .glot-button-orange:disabled {
-    background-color: #FF8E56 !important;
-    opacity: 0.5 !important;
-    cursor: not-allowed !important;
-    transform: none !important;
+  /* Input System */
+  .glot-input {
+    @apply w-full rounded-xl border border-input bg-background px-4 py-3 text-base transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent;
+    @apply placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50;
   }
   
+  /* Glass Effect */
   .glass-effect {
-    @apply bg-background/80 backdrop-blur-sm border border-border/50;
+    @apply bg-background/90 backdrop-blur-md border border-border/50 rounded-2xl;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Text Styles */
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .safe-area-padding {

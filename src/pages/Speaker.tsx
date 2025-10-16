@@ -264,14 +264,14 @@ const Speaker = () => {
 
         {/* Login Form */}
         <div className="container mx-auto px-4 py-12 max-w-md">
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle>{t('speaker.loginEvent')}</CardTitle>
-              <CardDescription>{t('speaker.security')}</CardDescription>
+          <Card className="glot-card">
+            <CardHeader className="text-center space-y-2">
+              <CardTitle className="text-2xl">{t('speaker.loginEvent')}</CardTitle>
+              <CardDescription className="text-base">{t('speaker.security')}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="broadcastKey">{t('speaker.eventKey')}</Label>
+            <CardContent className="space-y-5">
+              <div className="space-y-3">
+                <Label htmlFor="broadcastKey" className="text-sm font-semibold">{t('speaker.eventKey')}</Label>
                 <Input
                   id="broadcastKey"
                   type="password"
@@ -281,7 +281,8 @@ const Speaker = () => {
               </div>
               <Button 
                 onClick={handleLogin} 
-                className="w-full"
+                className="w-full glot-button-orange"
+                size="lg"
                 disabled={!broadcastKey.trim() || isLoggingIn}
               >
                 {isLoggingIn ? (
