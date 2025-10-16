@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { EventValidationResponse } from '@/types/event';
+import { z } from 'zod';
+
+const eventCodeSchema = z.string().regex(/^[A-Z2-9]{8}$/, 'Invalid event code format');
 
 export const useEventConnection = () => {
   const [isConnecting, setIsConnecting] = useState(false);
@@ -14,8 +17,18 @@ export const useEventConnection = () => {
     setIsConnecting(true);
 
     try {
+      const normalizedCode = eventCode.trim().toUpperCase();
+      
+      // Validate format before querying database
+      const validation = eventCodeSchema.safeParse(normalizedCode);
+      if (!validation.success) {
+        setError('invalidEventCode');
+        setIsConnecting(false);
+        return null;
+      }
+
       const { data, error: rpcError } = await supabase.rpc('validate_event_code', {
-        _event_code: eventCode.trim().toUpperCase()
+        _event_code: normalizedCode
       });
 
       if (rpcError) {

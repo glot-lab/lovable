@@ -1,4 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
+import { z } from 'zod';
+
+const speakerKeySchema = z.string().regex(/^[A-Za-z2-9]{20}$/, 'Invalid speaker key format');
 
 export interface EventInfo {
   id: string;
@@ -12,6 +15,12 @@ export interface EventInfo {
 export const useSpeakerAuth = () => {
   const verifySpeakerKey = async (speakerKey: string): Promise<EventInfo | null> => {
     try {
+      // Validate format before querying database
+      const validation = speakerKeySchema.safeParse(speakerKey);
+      if (!validation.success) {
+        throw new Error('Invalid speaker key format');
+      }
+
       // Verify speaker key against events table
       const { data: event, error } = await supabase
         .from('events')
@@ -45,12 +54,16 @@ export const useSpeakerAuth = () => {
     speakerKey: string
   ): Promise<string | null> => {
     try {
+      // Get current authenticated user
+      const { data: { user } } = await supabase.auth.getUser();
+      
       // Register speaker connection in event_speakers table
       const { data, error } = await supabase
         .from('event_speakers')
         .insert({
           event_id: eventId,
           speaker_key: speakerKey,
+          speaker_id: user?.id || null,
           is_active: true,
           connected_at: new Date().toISOString(),
         })
