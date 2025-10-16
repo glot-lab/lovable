@@ -237,25 +237,17 @@ const Listener = () => {
         </Card>
 
         {/* QR Code Scanner */}
-        <Card className="glot-card bg-muted/30">
-          <CardContent className="p-6 text-center space-y-4">
-            <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto">
-              <QrCode className="h-10 w-10 text-primary" />
+        <Card className="glot-card bg-muted/30 cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => setShowQRScanner(true)}>
+          <CardContent className="p-6 text-center">
+            <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 hover:bg-primary/20 transition-colors">
+              <div className="w-12 h-12 border-2 border-primary rounded-lg flex items-center justify-center">
+                <span className="text-2xl">📱</span>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold mb-2 text-lg">{t('listener.scanQRCode')}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                {t('listener.scanQRDescription')}
-              </p>
-            </div>
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => setShowQRScanner(true)}
-            >
-              <QrCode className="h-4 w-4 mr-2" />
-              Scanner un QR Code
-            </Button>
+            <h3 className="font-semibold mb-2 text-lg">{t('listener.scanQRCode')}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {t('listener.scanQRDescription')}
+            </p>
           </CardContent>
         </Card>
 
