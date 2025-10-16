@@ -12,7 +12,7 @@ interface QRCodeScannerProps {
 }
 
 export const QRCodeScanner = ({ open, onClose, onScan }: QRCodeScannerProps) => {
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ export const QRCodeScanner = ({ open, onClose, onScan }: QRCodeScannerProps) => 
       setError("");
       checkCameraPermission();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const checkCameraPermission = async () => {

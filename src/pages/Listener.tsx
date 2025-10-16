@@ -4,69 +4,36 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Play, Pause, QrCode } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
 import glotLogoNew from "@/assets/glot-logo-new.png";
 import GlotLandingPage from "@/components/GlotLandingPage";
-import { supabase } from "@/integrations/supabase/client";
 import { QRCodeScanner } from "@/components/QRCodeScanner";
+import { AVAILABLE_LANGUAGES, getLanguageByCode } from "@/constants/languages";
+import { useEventConnection } from "@/hooks/useEventConnection";
 
 const Listener = () => {
   const { t } = useLanguage();
+  const { validateEventCode, error: connectionError, setError } = useEventConnection();
+  
   const [eventCode, setEventCode] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
-  const [connectionError, setConnectionError] = useState("");
   const [showQRScanner, setShowQRScanner] = useState(false);
 
-  const availableLanguages = [
-    { code: "fr", name: "Français", flag: "🇫🇷" },
-    { code: "en", name: "English", flag: "🇬🇧" },
-    { code: "es", name: "Español", flag: "🇪🇸" },
-    { code: "de", name: "Deutsch", flag: "🇩🇪" },
-    { code: "it", name: "Italiano", flag: "🇮🇹" },
-    { code: "ar", name: "العربية", flag: "🇸🇦" },
-  ];
-
   const handleConnect = async () => {
-    setConnectionError("");
     if (!eventCode.trim() || !selectedLanguage) {
-      setConnectionError(t('listener.invalidEventCode'));
+      setError(t('listener.invalidEventCode'));
       return;
     }
+
+    const eventData = await validateEventCode(eventCode, selectedLanguage);
     
-    try {
-      // Validate event code securely without exposing speaker_key
-      const { data, error } = await supabase.rpc('validate_event_code', {
-        _event_code: eventCode.trim().toUpperCase()
-      });
-
-      if (error) {
-        console.error('Error validating event code:', error);
-        setConnectionError(t('listener.invalidEventCode'));
-        return;
-      }
-
-      if (!data) {
-        setConnectionError(t('listener.invalidEventCode'));
-        return;
-      }
-
-      // Check if selected language is available for this event
-      const eventData = data as { target_languages: string[] };
-      if (!eventData.target_languages?.includes(selectedLanguage)) {
-        setConnectionError(t('listener.languageNotAvailable'));
-        return;
-      }
-
+    if (eventData) {
       setIsConnected(true);
-      setConnectionError('');
-    } catch (err) {
-      console.error('Unexpected error:', err);
-      setConnectionError(t('listener.connectionError'));
     }
   };
 
@@ -79,12 +46,11 @@ const Listener = () => {
     setShowQRScanner(false);
   };
 
-  // Show landing page first
   if (showLanding) {
     return <GlotLandingPage onJoinEvent={() => setShowLanding(false)} />;
   }
 
-      if (isConnected) {
+  if (isConnected) {
     return (
       <div className="min-h-screen bg-background animate-fade-in">
         <InterfaceLanguageSelector />
@@ -107,7 +73,7 @@ const Listener = () => {
               <CardContent className="p-8 text-center">
                 
                 <h2 className="text-2xl font-semibold mb-3 text-foreground">
-                  {availableLanguages.find(l => l.code === selectedLanguage)?.name}
+                  {getLanguageByCode(selectedLanguage)?.name}
                 </h2>
                 <p className="text-muted-foreground mb-8 text-lg">{t('listener.realTimeTranslation')}</p>
                 
@@ -137,8 +103,8 @@ const Listener = () => {
                     <SelectTrigger>
                        <SelectValue placeholder={t('listener.selectLanguage')} />
                     </SelectTrigger>
-                    <SelectContent>
-                      {availableLanguages.map((lang) => (
+                     <SelectContent>
+                      {AVAILABLE_LANGUAGES.map((lang) => (
                         <SelectItem key={lang.code} value={lang.code}>
                           <div className="flex items-center gap-1">
                             <span>{lang.flag}</span>
@@ -204,8 +170,8 @@ const Listener = () => {
                 <SelectTrigger id="language" className="h-12">
                   <SelectValue placeholder={t('listener.selectLanguage')} />
                 </SelectTrigger>
-                <SelectContent>
-                  {availableLanguages.map((lang) => (
+                 <SelectContent>
+                  {AVAILABLE_LANGUAGES.map((lang) => (
                     <SelectItem key={lang.code} value={lang.code}>
                       <div className="flex items-center gap-2">
                         <span className="text-lg">{lang.flag}</span>
@@ -217,14 +183,12 @@ const Listener = () => {
               </Select>
             </div>
 
-            {/* Error Message */}
             {connectionError && (
               <div className="text-sm text-destructive-foreground text-center p-3 bg-destructive/10 rounded-xl border border-destructive/20">
-                {connectionError}
+                {t(`listener.${connectionError}`)}
               </div>
             )}
 
-            {/* Connect Button */}
             <Button 
               className="w-full glot-button-orange" 
               onClick={handleConnect}
@@ -236,8 +200,10 @@ const Listener = () => {
           </CardContent>
         </Card>
 
-        {/* QR Code Scanner */}
-        <Card className="glot-card bg-muted/30 cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => setShowQRScanner(true)}>
+        <Card 
+          className="glot-card bg-muted/30 cursor-pointer hover:bg-muted/50 transition-colors" 
+          onClick={() => setShowQRScanner(true)}
+        >
           <CardContent className="p-6 text-center">
             <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 hover:bg-primary/20 transition-colors">
               <div className="w-12 h-12 border-2 border-primary rounded-lg flex items-center justify-center">
@@ -251,23 +217,21 @@ const Listener = () => {
           </CardContent>
         </Card>
 
-        {/* QR Scanner Dialog */}
         <QRCodeScanner 
           open={showQRScanner}
           onClose={() => setShowQRScanner(false)}
           onScan={handleQRScan}
         />
 
-        {/* Device Compatibility */}
         <div className="text-center">
           <div className="flex items-center justify-center gap-6 mb-3">
             <span className="text-2xl">📱</span>
             <span className="text-2xl">💻</span>
             <span className="text-2xl">🖥️</span>
           </div>
-           <p className="text-sm text-muted-foreground">
-             {t('listener.deviceCompatibility')}
-           </p>
+          <p className="text-sm text-muted-foreground">
+            {t('listener.deviceCompatibility')}
+          </p>
         </div>
       </div>
     </div>
