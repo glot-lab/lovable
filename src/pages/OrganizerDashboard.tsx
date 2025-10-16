@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LogOut, Calendar, Plus, BarChart3, User } from 'lucide-react';
@@ -12,6 +13,7 @@ import InterfaceLanguageSelector from '@/components/InterfaceLanguageSelector';
 
 const OrganizerDashboard = () => {
   const { user, signOut } = useAuth();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('events');
 
   const { data: profile } = useQuery({
@@ -38,7 +40,7 @@ const OrganizerDashboard = () => {
           <div className="flex items-center justify-between">
             {/* Title and Name */}
             <div className="flex flex-col gap-1">
-              <h1 className="text-xl md:text-2xl font-bold">Glot Dashboard</h1>
+              <h1 className="text-xl md:text-2xl font-bold">{t('organizer.dashboard')}</h1>
               {profile?.full_name && (
                 <span className="text-sm text-muted-foreground">
                   {profile.full_name}
@@ -58,23 +60,21 @@ const OrganizerDashboard = () => {
           <TabsList className="grid w-full max-w-2xl grid-cols-4 mx-auto">
             <TabsTrigger value="events" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
               <Calendar className="h-4 w-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Mes Événements</span>
-              <span className="sm:hidden text-xs">Événements</span>
+              <span className="hidden sm:inline">{t('organizer.tabs.myEvents')}</span>
+              <span className="sm:hidden text-xs">{t('organizer.tabs.events')}</span>
             </TabsTrigger>
             <TabsTrigger value="create" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
               <Plus className="h-4 w-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Créer</span>
-              <span className="sm:hidden text-xs">Créer</span>
+              <span className="text-xs sm:text-sm">{t('organizer.tabs.create')}</span>
             </TabsTrigger>
             <TabsTrigger value="monitoring" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
               <BarChart3 className="h-4 w-4 flex-shrink-0" />
-              <span className="hidden lg:inline">Monitoring</span>
-              <span className="lg:hidden text-xs">Stats</span>
+              <span className="text-xs sm:text-sm">{t('organizer.tabs.stats')}</span>
             </TabsTrigger>
             <TabsTrigger value="account" className="flex items-center gap-1 md:gap-2 px-2 md:px-4">
               <User className="h-4 w-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Mon Compte</span>
-              <span className="sm:hidden text-xs">Compte</span>
+              <span className="hidden sm:inline">{t('organizer.tabs.account')}</span>
+              <span className="sm:hidden text-xs">{t('organizer.tabs.account')}</span>
             </TabsTrigger>
           </TabsList>
 
@@ -112,7 +112,7 @@ const OrganizerDashboard = () => {
             className="gap-2 w-full max-w-xs"
           >
             <LogOut className="h-4 w-4" />
-            Se déconnecter
+            {t('organizer.logout')}
           </Button>
         </div>
       </main>
