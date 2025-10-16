@@ -52,6 +52,9 @@ const translations = {
     'listener.scanQRDescription': 'Scannez le QR code affiché par l\'organisateur',
     'listener.deviceCompatibility': 'Compatible smartphone, tablette et ordinateur',
     'listener.encryption': '🔒 Chiffrement bout en bout • 📱 Compatible tous appareils',
+    'listener.invalidEventCode': 'Code d\'événement invalide',
+    'listener.languageNotAvailable': 'La langue sélectionnée n\'est pas disponible pour cet événement',
+    'listener.connectionError': 'Impossible de se connecter. Veuillez réessayer',
     
     // Organizer page
     'organizer.dashboard': 'Tableau de bord',
@@ -303,6 +306,9 @@ const translations = {
     'listener.scanQRDescription': 'Scan the QR code displayed by the organizer',
     'listener.deviceCompatibility': 'Compatible with smartphone, tablet and computer',
     'listener.encryption': '🔒 End-to-end encryption • 📱 Compatible with all devices',
+    'listener.invalidEventCode': 'Invalid event code',
+    'listener.languageNotAvailable': 'Selected language is not available for this event',
+    'listener.connectionError': 'Unable to connect. Please try again',
     
     // Landing page
     'landing.welcome': 'Welcome!',

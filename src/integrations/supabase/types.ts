@@ -248,6 +248,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      validate_event_code: {
+        Args: { _event_code: string }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "admin" | "organizer" | "speaker" | "listener"

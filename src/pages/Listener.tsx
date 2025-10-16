@@ -8,6 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
 import glotLogoNew from "@/assets/glot-logo-new.png";
 import GlotLandingPage from "@/components/GlotLandingPage";
+import { supabase } from "@/integrations/supabase/client";
 
 const Listener = () => {
   const { t } = useLanguage();
@@ -27,15 +28,42 @@ const Listener = () => {
     { code: "ar", name: "العربية", flag: "🇸🇦" },
   ];
 
-  const handleConnect = () => {
+  const handleConnect = async () => {
     setConnectionError("");
-    if (eventCode && selectedLanguage) {
-      // Simulate validation - in real app, this would call an API
-      if (eventCode.length < 4) {
+    if (!eventCode.trim() || !selectedLanguage) {
+      setConnectionError(t('listener.invalidEventCode'));
+      return;
+    }
+    
+    try {
+      // Validate event code securely without exposing speaker_key
+      const { data, error } = await supabase.rpc('validate_event_code', {
+        _event_code: eventCode.trim().toUpperCase()
+      });
+
+      if (error) {
+        console.error('Error validating event code:', error);
         setConnectionError(t('listener.invalidEventCode'));
         return;
       }
+
+      if (!data) {
+        setConnectionError(t('listener.invalidEventCode'));
+        return;
+      }
+
+      // Check if selected language is available for this event
+      const eventData = data as { target_languages: string[] };
+      if (!eventData.target_languages?.includes(selectedLanguage)) {
+        setConnectionError(t('listener.languageNotAvailable'));
+        return;
+      }
+
       setIsConnected(true);
+      setConnectionError('');
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      setConnectionError(t('listener.connectionError'));
     }
   };
 
