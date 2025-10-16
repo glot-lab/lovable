@@ -241,26 +241,8 @@ const Speaker = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-background">        
-        {/* Header */}
-        <div className="border-b bg-card shadow-subtle relative">
-          <InterfaceLanguageSelector />
-          <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
-            <div className="flex items-start justify-start gap-2 pr-12 sm:pr-4">
-              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-                <a href="/" className="flex-shrink-0 p-1 hover:bg-muted rounded-md transition-colors">
-                  <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hover:text-foreground" />
-                </a>
-                <div className="min-w-0">
-                  <h1 className="text-lg sm:text-2xl font-bold truncate">{t('speaker.title')}</h1>
-                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
-                    {t('speaker.subtitle')}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen bg-background">
+        <InterfaceLanguageSelector />
 
         {/* Login Form */}
         <div className="container mx-auto px-4 py-12 max-w-md">
@@ -302,35 +284,8 @@ const Speaker = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">      
-      {/* Header */}
-      <div className="border-b bg-card shadow-subtle relative">
-        <InterfaceLanguageSelector />
-        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 pr-12 sm:pr-4">
-              <a href="/organizer" className="flex-shrink-0 p-1 hover:bg-muted rounded-md transition-colors">
-                <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hover:text-foreground" />
-              </a>
-              <div className="min-w-0">
-                <h1 className="text-lg sm:text-2xl font-bold truncate">
-                  {eventTitle || t('speaker.title')}
-                </h1>
-                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
-                  {eventTitle ? t('speaker.subtitle') : t('speaker.subtitle')}
-                </p>
-              </div>
-            </div>
-            
-            {/* Center - Connection Status */}
-            <div className="flex-1 flex justify-center">
-              <Badge variant={isBroadcasting ? "default" : "outline"} className="text-xs sm:text-base px-2 sm:px-4 py-1 sm:py-2">
-                {isBroadcasting ? t('speaker.broadcasting') : t('common.connected')}
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background">
+      <InterfaceLanguageSelector />
 
       <div className="container mx-auto px-4 py-4 sm:py-8 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
