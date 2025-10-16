@@ -246,6 +246,13 @@ const Speaker = () => {
 
         {/* Login Form */}
         <div className="container mx-auto px-4 max-w-md">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <a href="/" className="hover:opacity-80 transition-opacity">
+              <img src={glotLogoNew} alt="Glot" className="h-16" />
+            </a>
+          </div>
+          
           <Card className="glot-card">
             <CardHeader className="text-center space-y-2">
               <CardTitle className="text-2xl">{t('speaker.loginEvent')}</CardTitle>
