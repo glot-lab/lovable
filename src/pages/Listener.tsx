@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Play, Pause, Volume2 } from "lucide-react";
+import { Play, Pause, QrCode } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InterfaceLanguageSelector from "@/components/InterfaceLanguageSelector";
 import glotLogoNew from "@/assets/glot-logo-new.png";
 import GlotLandingPage from "@/components/GlotLandingPage";
 import { supabase } from "@/integrations/supabase/client";
+import { QRCodeScanner } from "@/components/QRCodeScanner";
 
 const Listener = () => {
   const { t } = useLanguage();
@@ -19,6 +20,7 @@ const Listener = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
   const [connectionError, setConnectionError] = useState("");
+  const [showQRScanner, setShowQRScanner] = useState(false);
 
   const availableLanguages = [
     { code: "fr", name: "Français", flag: "🇫🇷" },
@@ -70,6 +72,11 @@ const Listener = () => {
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const handleQRScan = (scannedCode: string) => {
+    setEventCode(scannedCode.toUpperCase());
+    setShowQRScanner(false);
   };
 
   // Show landing page first
@@ -229,20 +236,35 @@ const Listener = () => {
           </CardContent>
         </Card>
 
-        {/* QR Code Alternative */}
+        {/* QR Code Scanner */}
         <Card className="glot-card bg-muted/30">
-          <CardContent className="p-6 text-center">
-            <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <div className="w-12 h-12 border-2 border-primary rounded-lg flex items-center justify-center">
-                <span className="text-2xl">📱</span>
-              </div>
+          <CardContent className="p-6 text-center space-y-4">
+            <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto">
+              <QrCode className="h-10 w-10 text-primary" />
             </div>
-            <h3 className="font-semibold mb-2 text-lg">{t('listener.scanQRCode')}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {t('listener.scanQRDescription')}
-            </p>
+            <div>
+              <h3 className="font-semibold mb-2 text-lg">{t('listener.scanQRCode')}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                {t('listener.scanQRDescription')}
+              </p>
+            </div>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => setShowQRScanner(true)}
+            >
+              <QrCode className="h-4 w-4 mr-2" />
+              Scanner un QR Code
+            </Button>
           </CardContent>
         </Card>
+
+        {/* QR Scanner Dialog */}
+        <QRCodeScanner 
+          open={showQRScanner}
+          onClose={() => setShowQRScanner(false)}
+          onScan={handleQRScan}
+        />
 
         {/* Device Compatibility */}
         <div className="text-center">
