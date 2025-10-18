@@ -135,9 +135,9 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary/5 via-background to-muted p-4">
+    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-primary/5 via-background to-muted p-4 pt-16">
       {/* Logo */}
-      <div className="mb-8 animate-scale-in">
+      <div className="mb-6 animate-scale-in">
         <a href="/" className="inline-block hover:opacity-90 transition-opacity">
           <img src={glotLogo} alt="Glot" className="h-20 md:h-24 lg:h-28 w-auto" />
         </a>
