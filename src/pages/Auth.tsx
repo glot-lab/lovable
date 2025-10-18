@@ -135,16 +135,20 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-muted p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-primary/5 via-background to-muted p-4">
+      {/* Logo */}
+      <div className="mb-8 animate-scale-in">
+        <a href="/" className="inline-block hover:opacity-90 transition-opacity">
+          <img src={glotLogo} alt="Glot" className="h-20 md:h-24 lg:h-28 w-auto" />
+        </a>
+      </div>
+
       <Card className="w-full max-w-md glot-card">
-        <CardHeader className="text-center space-y-4">
-          <img src={glotLogo} alt="Glot" className="h-14 mx-auto" />
-          <div>
-            <CardTitle className="text-2xl mb-2">Bienvenue sur Glot</CardTitle>
-            <CardDescription className="text-base">
-              Connectez-vous pour gérer vos événements de traduction en temps réel
-            </CardDescription>
-          </div>
+        <CardHeader className="text-center space-y-2">
+          <CardTitle className="text-2xl">Bienvenue sur Glot</CardTitle>
+          <CardDescription className="text-base">
+            Connectez-vous pour gérer vos événements de traduction en temps réel
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {forgotPasswordMode ? (
