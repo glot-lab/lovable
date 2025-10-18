@@ -265,14 +265,15 @@ const Speaker = () => {
 
         {/* Login Form */}
         <div className="container mx-auto px-4 max-w-md text-center flex-1 flex items-center">
-          <div className="w-full">
+          <div className="w-full space-y-6">
+            {/* Titres au-dessus de la card */}
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold">{t('speaker.loginEvent')}</h1>
+              <p className="text-lg text-muted-foreground">{t('speaker.security')}</p>
+            </div>
           
-          <Card className="glot-card">
-            <CardHeader className="text-center space-y-2">
-              <CardTitle className="text-2xl">{t('speaker.loginEvent')}</CardTitle>
-              <CardDescription className="text-base">{t('speaker.security')}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-5">
+            <Card className="glot-card">
+              <CardContent className="space-y-5 pt-6">
               <div className="space-y-3">
                 <Label htmlFor="broadcastKey" className="text-sm font-semibold">{t('speaker.eventKey')}</Label>
                 <Input
@@ -298,7 +299,7 @@ const Speaker = () => {
                 )}
               </Button>
             </CardContent>
-            </Card>
+          </Card>
           </div>
         </div>
       </div>
