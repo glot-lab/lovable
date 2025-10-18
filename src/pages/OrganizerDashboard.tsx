@@ -47,9 +47,9 @@ const OrganizerDashboard = () => {
           <div className="flex items-center justify-between">
             {/* Title and Description */}
             <div className="flex flex-col gap-1">
-              <h1 className="text-xl md:text-2xl font-bold">Tableau de bord Glot</h1>
+              <h1 className="text-xl md:text-2xl font-bold">{t('organizer.dashboardTitle')}</h1>
               <span className="text-sm text-muted-foreground">
-                Gérez vos événements et suivez vos sessions de traduction.
+                {t('organizer.dashboardSubtitle')}
               </span>
             </div>
             

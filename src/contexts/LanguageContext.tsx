@@ -58,6 +58,8 @@ const translations = {
     
     // Organizer page
     'organizer.dashboard': 'Tableau de bord',
+    'organizer.dashboardTitle': 'Tableau de bord Glot',
+    'organizer.dashboardSubtitle': 'Gérez vos événements et suivez vos sessions de traduction.',
     'organizer.title': 'Espace Organisateur',
     'organizer.subtitle': 'Gérez vos événements de traduction simultanée',
     'organizer.tabs.events': 'Événements',
@@ -325,6 +327,8 @@ const translations = {
     
     // Organizer page
     'organizer.dashboard': 'Dashboard',
+    'organizer.dashboardTitle': 'Glot Dashboard',
+    'organizer.dashboardSubtitle': 'Manage your events and monitor your translation sessions.',
     'organizer.title': 'Organizer Space',
     'organizer.subtitle': 'Manage your simultaneous translation events',
     'organizer.tabs.events': 'Events',
