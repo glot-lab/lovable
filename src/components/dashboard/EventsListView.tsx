@@ -215,8 +215,23 @@ const EventsListView = () => {
               <TableBody>
                 {filteredEvents?.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                      {t('organizer.events.noEvents')}
+                    <TableCell colSpan={6} className="text-center py-12">
+                      <div className="flex flex-col items-center gap-3">
+                        <Calendar className="h-12 w-12 text-muted-foreground/50" />
+                        <div className="space-y-1">
+                          <p className="text-muted-foreground font-medium">
+                            {events?.length === 0 
+                              ? "Aucun événement pour le moment."
+                              : t('organizer.events.noEvents')
+                            }
+                          </p>
+                          {events?.length === 0 && (
+                            <p className="text-sm text-muted-foreground">
+                              Cliquez sur <span className="font-semibold">+ Créer</span> pour lancer votre première session Glot
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ) : (
