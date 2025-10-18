@@ -12,15 +12,17 @@ import { useToast } from '@/hooks/use-toast';
 import glotLogo from '@/assets/glot-logo-new.png';
 
 const signupSchema = z.object({
-  email: z.string().email('Email invalide'),
-  password: z.string().min(8, 'Mot de passe trop court (min 8 caractères)'),
+  email: z.string().email('Email invalide').max(255, 'Email trop long'),
+  password: z.string().min(8, 'Mot de passe trop court (min 8 caractères)').max(128, 'Mot de passe trop long'),
   confirmPassword: z.string(),
-  fullName: z.string().optional(),
-  companyName: z.string().optional(),
+  fullName: z.string().max(100, 'Nom trop long').optional(),
+  companyName: z.string().max(100, 'Nom d\'entreprise trop long').optional(),
 }).refine(data => data.password === data.confirmPassword, {
   message: 'Les mots de passe ne correspondent pas',
   path: ['confirmPassword'],
 });
+
+const resetEmailSchema = z.string().email('Email invalide').max(255, 'Email trop long');
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -99,26 +101,36 @@ const Auth = () => {
     setResetLoading(true);
     
     try {
+      // Validate email format and length
+      const validation = resetEmailSchema.safeParse(resetEmail);
+      if (!validation.success) {
+        toast({
+          title: 'Erreur',
+          description: validation.error.errors[0].message,
+          variant: 'destructive',
+        });
+        return;
+      }
+
       const { supabase } = await import('@/integrations/supabase/client');
-      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+      await supabase.auth.resetPasswordForEmail(resetEmail, {
         redirectTo: `${window.location.origin}/auth?mode=reset`,
       });
 
-      if (error) throw error;
-
+      // Always show generic success message to prevent email enumeration
       toast({
         title: 'Email envoyé',
-        description: 'Vérifiez votre boîte mail pour réinitialiser votre mot de passe.',
+        description: 'Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.',
       });
       
       setForgotPasswordMode(false);
       setResetEmail('');
     } catch (error: any) {
       console.error('Reset password error:', error);
+      // Always show generic error message to prevent email enumeration
       toast({
-        title: 'Erreur',
-        description: error.message || 'Impossible d\'envoyer l\'email de réinitialisation',
-        variant: 'destructive',
+        title: 'Email envoyé',
+        description: 'Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.',
       });
     } finally {
       setResetLoading(false);
@@ -302,6 +314,9 @@ const Auth = () => {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                   />
+                  {errors.fullName && (
+                    <p className="text-sm text-destructive">{errors.fullName}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="company">Entreprise</Label>
@@ -311,6 +326,9 @@ const Auth = () => {
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                   />
+                  {errors.companyName && (
+                    <p className="text-sm text-destructive">{errors.companyName}</p>
+                  )}
                 </div>
                 <Button
                   type="submit"
