@@ -253,18 +253,18 @@ const Speaker = () => {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center pb-56 pt-8">
+      <div className="min-h-screen bg-background flex flex-col items-center pb-56 pt-16">
         <InterfaceLanguageSelector />
 
         {/* Logo */}
-        <div className="mb-12 animate-scale-in">
+        <div className="mb-8 animate-scale-in">
           <a href="/" className="inline-block hover:opacity-90 transition-opacity">
-            <img src={glotLogoNew} alt="Glot" className="h-24 md:h-32 lg:h-36 w-auto" />
+            <img src={glotLogoNew} alt="Glot" className="h-20 md:h-24 lg:h-28 w-auto" />
           </a>
         </div>
 
         {/* Login Form */}
-        <div className="container mx-auto px-4 max-w-md text-center flex-1 flex items-center">
+        <div className="container mx-auto px-4 max-w-md text-center flex-1 flex items-start">
           <div className="w-full space-y-6">
             {/* Titres au-dessus de la card */}
             <div className="space-y-2">
