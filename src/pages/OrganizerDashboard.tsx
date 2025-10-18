@@ -45,14 +45,12 @@ const OrganizerDashboard = () => {
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            {/* Title and Name */}
+            {/* Title and Description */}
             <div className="flex flex-col gap-1">
-              <h1 className="text-xl md:text-2xl font-bold">{t('organizer.dashboard')}</h1>
-              {profile?.full_name && (
-                <span className="text-sm text-muted-foreground">
-                  {profile.full_name}
-                </span>
-              )}
+              <h1 className="text-xl md:text-2xl font-bold">Tableau de bord Glot</h1>
+              <span className="text-sm text-muted-foreground">
+                Gérez vos événements et suivez vos sessions de traduction.
+              </span>
             </div>
             
             {/* Language Selector */}
