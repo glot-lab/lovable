@@ -268,8 +268,8 @@ const Speaker = () => {
           <div className="w-full space-y-6">
             {/* Titres au-dessus de la card */}
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold">{t('speaker.loginEvent')}</h1>
-              <p className="text-lg text-muted-foreground">{t('speaker.security')}</p>
+              <h1 className="text-2xl font-bold">{t('speaker.loginEvent')}</h1>
+              <p className="text-base text-muted-foreground">{t('speaker.security')}</p>
             </div>
           
             <Card className="glot-card">
