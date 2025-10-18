@@ -138,6 +138,14 @@ const Auth = () => {
                     onChange={(e) => setLoginPassword(e.target.value)}
                     required
                   />
+                  <div className="text-right">
+                    <button 
+                      type="button"
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Mot de passe oublié ?
+                    </button>
+                  </div>
                 </div>
                 <Button
                   type="submit"
