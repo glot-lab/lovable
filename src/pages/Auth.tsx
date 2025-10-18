@@ -6,8 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import { z } from 'zod';
+import { useToast } from '@/hooks/use-toast';
 import glotLogo from '@/assets/glot-logo-new.png';
 
 const signupSchema = z.object({
@@ -24,6 +25,7 @@ const signupSchema = z.object({
 const Auth = () => {
   const navigate = useNavigate();
   const { user, signIn, signUp, isLoading } = useAuth();
+  const { toast } = useToast();
   
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -36,6 +38,9 @@ const Auth = () => {
   const [companyName, setCompanyName] = useState('');
   const [signupLoading, setSignupLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -89,6 +94,37 @@ const Auth = () => {
     }
   };
 
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setResetLoading(true);
+    
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+        redirectTo: `${window.location.origin}/auth?mode=reset`,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Email envoyé',
+        description: 'Vérifiez votre boîte mail pour réinitialiser votre mot de passe.',
+      });
+      
+      setForgotPasswordMode(false);
+      setResetEmail('');
+    } catch (error: any) {
+      console.error('Reset password error:', error);
+      toast({
+        title: 'Erreur',
+        description: error.message || 'Impossible d\'envoyer l\'email de réinitialisation',
+        variant: 'destructive',
+      });
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
 
   if (isLoading) {
     return (
@@ -111,13 +147,60 @@ const Auth = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="login">
-            <TabsList className="grid w-full grid-cols-2 mb-8 h-12">
-              <TabsTrigger value="login" className="text-base">Connexion</TabsTrigger>
-              <TabsTrigger value="signup" className="text-base">Inscription</TabsTrigger>
-            </TabsList>
+          {forgotPasswordMode ? (
+            <div className="space-y-6">
+              <Button
+                variant="ghost"
+                onClick={() => setForgotPasswordMode(false)}
+                className="mb-2"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Retour
+              </Button>
+              
+              <div className="space-y-2 text-center">
+                <h3 className="text-xl font-semibold">Réinitialiser le mot de passe</h3>
+                <p className="text-sm text-muted-foreground">
+                  Entrez votre email pour recevoir un lien de réinitialisation
+                </p>
+              </div>
 
-            <TabsContent value="login">
+              <form onSubmit={handleResetPassword} className="space-y-5">
+                <div className="space-y-3">
+                  <Label htmlFor="reset-email" className="text-sm font-semibold">Email</Label>
+                  <Input
+                    id="reset-email"
+                    type="email"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  size="lg"
+                  disabled={resetLoading}
+                >
+                  {resetLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Envoi...
+                    </>
+                  ) : (
+                    'Envoyer le lien'
+                  )}
+                </Button>
+              </form>
+            </div>
+          ) : (
+            <Tabs defaultValue="login">
+              <TabsList className="grid w-full grid-cols-2 mb-8 h-12">
+                <TabsTrigger value="login" className="text-base">Connexion</TabsTrigger>
+                <TabsTrigger value="signup" className="text-base">Inscription</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-5">
                 <div className="space-y-3">
                   <Label htmlFor="login-email" className="text-sm font-semibold">Email</Label>
@@ -141,6 +224,7 @@ const Auth = () => {
                   <div className="text-right">
                     <button 
                       type="button"
+                      onClick={() => setForgotPasswordMode(true)}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     >
                       Mot de passe oublié ?
@@ -240,7 +324,8 @@ const Auth = () => {
                 </Button>
               </form>
             </TabsContent>
-          </Tabs>
+            </Tabs>
+          )}
         </CardContent>
       </Card>
     </div>
